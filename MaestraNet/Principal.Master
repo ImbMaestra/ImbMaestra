@@ -1,0 +1,264 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Principal.Master.cs" Inherits="MaestraNet.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="es">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Maestra NET</title>
+    <!-- Estilos de bootstrap 4 -->
+    <link rel="stylesheet" href="style-wide.css" />
+    <!-- Estilos del header -->
+    <link rel="stylesheet" href="css/header-wide.css" />
+    <!-- Estilos del sidebar -->
+    <link rel="stylesheet" href="css/aside.css" />
+    <!-- Estilos del contenido principal -->
+    <link rel="stylesheet" href="css/main-wide.css" />
+    <!-- Estilos de la sección cifras -->
+    <link rel="stylesheet" href="css/cifras.css" />
+    <!-- Estilos de la sección cifras -->
+    <link rel="stylesheet" href="css/indicadores.css" />
+    <!-- Estilos  boostrap -->
+    <link rel="stylesheet" href="css/bootstrap-grid-wide.css" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="css_m/fontawesome/css/all.css" />
+<%--    <script src="../../Scripts/jquery-3.0.0.min.js"></script>
+    <script src="../../Scripts/popper.min.js"></script>
+    <script src="../../Scripts/bootstrap.min.js"></script>
+    <script src="../../js/jquery-slim.min.js"></script>
+    <script src="../../js/jquery.bxslider.min.js"></script>--%>
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+	<style>
+
+		.titulo {
+			color: #eacc1b;
+			font-size: 0.75rem;
+			font-weight: 700;
+		}
+		.tituloBlanco {
+			color: white;
+			font-size: 0.75rem;
+			font-weight: 700;
+		}
+	</style>
+
+
+</head>
+<body >
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" />
+    <div class="deco"></div>
+    <header class="container mt-4">
+        <div class="row h-100">
+            <section class="col-md-3 align-self-center text-center">
+
+                <asp:ImageButton ID="imgLogo" runat="server" ImageUrl="~/images/logo.svg" OnClick="imgLogo_Click" width="60" />
+                <%--<asp:ImageButton ID="imgLogo" runat="server" ImageUrl="~/images/logo.png" OnClick="imgLogo_Click" width="60" />--%>
+            </section>
+               <section class="col-md-9">
+                <div class="info text-white bg-primary d-flex justify-content-between" style="text-align: right">
+<%--                    <div >
+                     <div class="text-right">--%>
+                        <table width="100%">
+                            <tr>
+                                <td align="right">
+                                    <ul class="list-inline m-0">
+							            <li class="list-inline-item">
+                                            <asp:LinkButton ID="lnkHome" runat="server" OnClick="lnkHome_Click">
+                                                <i class="fa fa-home" aria-hidden="true" style="color:white"></i>
+                                            </asp:LinkButton>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <asp:LinkButton ID="lnkConfig" runat="server" OnClick="lnkConfig_Click">
+                                                <i class="fa fa-cog" aria-hidden="true" style="color:white"></i>
+                                            </asp:LinkButton>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <asp:LinkButton ID="lnkSalir" runat="server" OnClick="lnkSalir_Click" Font-Underline="false">
+                                                <i class="fa fa-times" aria-hidden="true" style="color:white"></i>
+                                            </asp:LinkButton>
+                                        </li>
+
+                                        <li class="list-inline-item">
+								            <h3 class="titulo">
+                                                <span class="tituloBlanco ">Hola,</span> 
+                                                <asp:Label ID="lblUsuario" runat="server" Text="Usuario" Font-Bold="True"></asp:Label>
+								            </h3>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+
+ <%--                   </div>
+                    </div>--%>
+                </div>
+            </section>
+
+        </div>
+    </header>
+
+
+
+
+    <main class="container">
+
+        <div class="row">
+            <section id="main-content" class="col-md-12">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                </asp:ContentPlaceHolder>
+            </section>
+        </div>
+    </main>
+    <footer style="
+					
+					
+					">
+    <section id="cifras" class="container mb-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card text-white bg-primary text-center p-3 mt-3">
+                    <div class="row">
+                        <div class="col-md">
+                            <span>
+								<i class="fa fa-tags" aria-hidden="true"></i> TICKET</span><b> de soporte</b>
+                                <li class="list-inline-item"><i class="fa fa-phone" aria-hidden="true"></i><a href  ="tel:+56229409708"  style="color:white">Anexo 708</a></li>
+                                <li class="list-inline-item"><i class="fa fa-at" aria-hidden="true"></i> <a href  ="mailto:soporte@maestra.cl"  style="color:white">soporte@maestra.cl</a></li>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+        <div class="row">
+           <div class="col">
+                <MARQUEE scrolldelay ="60" truespeed ="60">
+                    <div class="holder d-flex flex-row justify-content-center">
+                        <div class="p-2">
+                            <asp:Label ID="lblUF" runat="server" Text="UF $ 26.000" CssClass="font_indicadors"></asp:Label>
+                        </div>
+                        &nbsp; &nbsp; &nbsp;
+                        <div class="p-2">
+                            <asp:Label ID="lblDollar" runat="server" Text="Dollar $ 650" CssClass="font_indicadors"></asp:Label>
+                        </div>
+                    </div></MARQUEE>
+            </div>
+        </div>
+
+            <center>
+                <table>
+                    <tr>
+                        <td align="center">
+                            <div style="font-size:10px;">Ambiente Productivo Ver: 3.0</div>
+                            <div style="font-size:10px;padding: 0px 2px 2px 2px; margin-top: 0px">2020-05-05</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <span style="font-size:10px;"></span>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+		</footer> 
+        <!-- Alerta Confirmación-->
+        <div class="modal fade" id="modalAlertaConfirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalDetalle" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">    
+                    <div class="modal-header">
+						<asp:Label ID="lblTituloConfirmar" runat="server" CssClass="confirmar_modal"><span runat="server" class="oi oi-question-mark"></span>&nbsp;&nbsp;Confirmación</asp:Label>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;den="true">&times;</span>
+                        </button>
+                    </div>
+	                <div class="modal-body">
+                        <h6 style="margin-right:auto; margin-left:auto">
+							<asp:Label ID="lblAlertaMSGConfirmar" runat="server" Text=""></asp:Label>
+						</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="botoMaestra btn" data-dismiss="modal">Aceptar</button>
+                        <button type="button" class="botonCancelar btn" data-dismiss="modal">Canlear</button>
+                    </div>
+                </div>
+            </div>
+        </div>   
+        <!-- FIN - Alerta Confirmación-->
+		
+        <!-- Alerta Error-->
+        <div class="modal fade" id="modalAlertaError" tabindex="-1" role="dialog" aria-labelledby="exampleModalDetalle" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">    
+                    <div class="modal-header">
+						<asp:Label ID="lblTituloError" runat="server" CssClass="error_modal"><span runat="server" class="oi oi-circle-x"></span>&nbsp;&nbsp;Error</asp:Label>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+	                <div class="modal-body">
+                        <h6 style="margin-right:auto; margin-left:auto">
+							<asp:Label ID="lblAlertaMSGError" runat="server" Text=""></asp:Label>
+						</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="botoMaestra btn" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>   
+        <!-- FIN - Alerta Error-->	
+
+        <!-- Alerta Alert-->
+        <div class="modal fade" id="modalAlertaAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalDetalle" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">    
+                    <div class="modal-header">
+						<asp:Label ID="Label8" runat="server" CssClass="error_modal"><span runat="server" class="oi oi-warning"></span>&nbsp;&nbsp;Advertencia</asp:Label>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+	                <div class="modal-body">
+                        <h6 style="margin-right:auto; margin-left:auto">
+							<asp:Label ID="lblAlertaMSGAlert" runat="server" Text=""></asp:Label>
+						</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="botoMaestra btn" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>   
+        <!-- FIN - Alerta Alert-->	
+
+		<!-- Alerta Información-->
+        <div class="modal fade" id="modalAlertaInformar" tabindex="-1" role="dialog" aria-labelledby="exampleModalDetalle" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">    
+                    <div class="modal-header">                        
+						<asp:Label ID="lblTituloInformar" runat="server" CssClass="info_modal"><span runat="server" class="oi oi-info"></span>&nbsp;&nbsp;Información</asp:Label>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+	                <div class="modal-body">
+                        <h6 style="margin-right:auto; margin-left:auto">
+							<asp:Label ID="lblAlertaMSGInfo" runat="server" Text=""></asp:Label>
+						</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="botoMaestra btn" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>   
+        <!-- FIN - Alerta Información-->
+</form>
+</body>
+</html>
+

@@ -1,0 +1,18 @@
+aside .widget {
+  margin-bottom: 30px; }
+  aside .widget:last-of-type {
+    margin-bottom: 0; }
+
+aside h3 {
+  text-transform: uppercase;
+  border-bottom: 2px solid #0c3a63;
+  font-size: 1.25em;
+  padding-bottom: 5px;
+  margin-bottom: 10px; }
+
+aside p {
+  font-size: 0.9em; }
+
+aside .btn {
+  text-transform: uppercase;
+  font-weight: 700; }

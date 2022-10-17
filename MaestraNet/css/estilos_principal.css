@@ -1,0 +1,245 @@
+﻿body {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 12px;
+    background: transparent url(../img/fondo_principal.png) no-repeat 0 0;
+    background-color: #969595;
+    background-size: cover;
+}
+
+
+
+.BordeRadio5 {
+    border-radius: 5px 5px 5px 5px;
+}
+
+.BordeRadio10 {
+    border-radius: 10px 10px 10px 10px;
+}
+
+.BordeRadio15 {
+    border: solid #000000 2px;
+    border-radius: 15px 15px 15px 15px;
+}
+
+
+#main {
+    min-height: 500px;
+    margin: 0px;
+    padding: 0px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row;
+    flex-flow: row;
+}
+
+    #main > nav {
+        margin: 4px;
+        padding: 5px;
+        border: 1px solid #8888bb;
+        border-radius: 7pt;
+        background: #2F3470;
+        -webkit-flex: 1 6 15%;
+        flex: 1 6 10%;
+        -webkit-order: 1;
+        order: 1;
+        color: #FFFFFF;
+    }
+        #main > nav a:link {
+            color: #FFFFFF;
+        }
+        #main > nav a:visited {
+            color: #FFFFFF;
+        }
+        #main > nav a:active {
+            color: #FFFFFF;
+        }
+        #main > nav a:hover {
+            color: #FFFFFF;
+            font-weight:bold;
+        }
+
+    #main > article {
+        margin: 4px;
+        padding: 5px;
+        border: 1px solid #8888bb;
+        border-radius: 7pt;
+        background: #FFFFFF;
+        -webkit-flex: 3 1 65%;
+        flex: 3 1 90%;
+        -webkit-order: 2;
+        order: 2;
+    }
+
+
+    /*#main > aside {
+        margin: 4px;
+        padding: 5px;
+        border: 1px solid #8888bb;
+        border-radius: 7pt;
+        background: #ccccff;
+        -webkit-flex: 1 6 20%;
+        flex: 1 6 20%;
+        -webkit-order: 3;
+        order: 3;
+    }*/
+
+header {
+    display: block;
+    margin: 4px;
+    padding: 5px;
+    min-height: 100px;
+    border: 1px solid #8888bb;
+    border-radius: 7pt;
+    background: #E0DEDD;
+}
+
+.logo {
+    border-radius: 7pt;
+    border: 1px solid #8888bb;
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    float: left;
+}
+    .logo img {
+        height: 95px;
+    }
+
+.barra_usuario {
+    box-sizing: border-box;
+    height: 30px;
+    width: 100%;
+    background-color: #E0DEDD;
+}
+
+.icono_barra_usuario {
+    height:20px;
+}
+    .icono_barra_usuario:hover {
+        background-color: #2F3470;
+        border-radius: 2pt;
+        cursor: pointer;
+    }
+
+.menu_botones {
+    height: auto;
+    float: left;
+    display: grid;
+    display: grid;
+    grid-template-columns: 200px 200px 200px 200px;
+    grid-gap: 50px;
+    margin-left: 50px;
+}
+
+.menu_botones_img {
+    width: 200px;
+    height: auto;
+    float: left;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+    .menu_botones_img:hover {
+        background-color: #E0DEDD;
+        border-radius: 10pt;
+        cursor: pointer;
+    }
+
+
+footer {
+    display: block;
+    margin: 4px;
+    padding: 5px;
+    min-height: 25px;
+    border: 1px solid #8888bb;
+    border-radius: 7pt;
+    background: #eebb55;
+}
+
+
+.myfooter {
+    width: 100%;
+    text-align: center;
+    padding: 1em;
+    align-self: flex-end;
+}
+
+
+.indicador {
+    width: 25%;
+    float: left;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+    .indicador:hover {
+        font-weight: bold;
+    }
+
+
+/* Too narrow to support three columns */
+
+
+@media all and (max-width: 1400px) {
+    .menu_botones {
+        grid-template-columns: 150px 150px 150px 150px;
+        grid-gap: 25px;
+        margin-left: 25px;
+    }
+
+    .menu_botones_img {
+        width: 150px;
+    }
+}
+
+@media all and (max-width: 950px ) {
+    #main > nav {
+        display: none;
+    }
+}
+
+@media all and (max-width: 800px) {
+
+    #main, #page {
+        -webkit-flex-flow: column;
+        flex-flow: column;
+    }
+
+        #main > nav, #main > aside {
+            min-height: 50px;
+            max-height: 50px;
+        }
+
+    .menu_botones {
+        grid-template-columns: 120px 120px 120px 120px;
+        grid-gap: 15px;
+        margin-left: 15px;
+    }
+
+    .menu_botones_img {
+        width: 120px;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    #main > nav {
+        display: none;
+    }
+
+    .footer {
+        max-height: 15px;
+    }
+}
+
+@media all and (max-width: 600px) {
+    .menu_botones {
+        grid-template-columns: 120px 120px 120px ;
+        grid-gap: 15px;
+        margin-left: 15px;
+    }
+
+    .menu_botones_img {
+        width: 120px;
+    }
+}

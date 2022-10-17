@@ -1,0 +1,79 @@
+.deco {
+  display: block;
+  width: 80px;
+  height: 179px;
+  z-index: 0;
+  position: absolute;
+  left: 0;
+  top: 70px;
+  background: url(../images/deco.svg) no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+
+header {
+    padding-top:0px !important;
+    margin-bottom: 0.125rem; }
+  header .logo {
+    margin: 10px 0; 
+    height: 75px;
+    width: 100px;
+  }
+  header .info {
+    padding: 0.125rem 0.125rem;
+    border-radius: 0.25rem 0.25rem 0 0;
+    margin-bottom: 2px; }
+    header .info p {
+      margin: 0;
+      font-weight: 700;
+      font-size: .8em;
+      line-height: 1.8em; }
+    /*header .info a {
+      color: #fff; }*/
+      header .info a:hover, header .info a:focus {
+        opacity: 0.8; }
+    header list-inline-item {
+        color: #fff;
+    }
+
+    @media (min-width: 992px) {
+        .nav-item {
+    text-align: center;
+    /*width: 20%;*/
+    margin-right: 2px; }
+    .nav-item .fa {
+      display: block;
+      text-align: center;
+      width: 100%;
+      font-size: 1.5em;
+      margin-bottom: 2px; }
+    .nav-item:last-child {
+      margin-right: 0; } }
+
+@media (max-width: 414px) {
+  .deco {
+    width: 70px;
+    height: 157px;
+    top: 50px; } }
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .deco {
+    width: 40px;
+    height: 90px;
+    top: 160px; } }
+
+.navbar-nav > li {
+    font-size: 14px;
+}
+
+.dropdown-menu {
+    margin-left: 16px;
+    margin-right: 16px;
+    padding: 20px 0px;
+    left: auto;  /*added 
+    font-size: 14px;*/
+    color: black !important;
+}
+
+
