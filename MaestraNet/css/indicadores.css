@@ -1,0 +1,6 @@
+#indicadores .holder {
+  border-top: 2px solid #0c3a63;
+  border-bottom: 2px solid #0c3a63;
+  margin-bottom: 1.5rem; }
+  #indicadores .holder span {
+    font-size: 0.9em; }
