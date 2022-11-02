@@ -11,7 +11,7 @@
     <link href="../../../Content/bootstrap.min.css" rel="stylesheet" />
     <link href="../sistema_venta.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSuOjgm4Ivz6-lSMx8FKB7gkchlCuypm0"></script>
+    <script src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
     <script type="text/javascript">
         function isEmail(email) {
             var control = email;
@@ -60,7 +60,11 @@
                                 <div class="col-md-2">
                                     <label for="Orientacion">
                                         Orientacion: &nbsp;
-                                        <asp:TextBox ID="txtOrientacion" runat="server" Width="80px" ReadOnly="true" CssClass="BordeRadio10" BackColor="Yellow" MaxLength="50"></asp:TextBox>
+                                       <%-- <asp:TextBox ID="txtOrientacion" runat="server" Width="80px" ReadOnly="true" CssClass="BordeRadio10" BackColor="Yellow" MaxLength="50"></asp:TextBox>--%>
+                                    
+                                        <asp:DropDownList ID="ddlOrientacion" runat="server" Width="110px" CssClass="BordeRadio10" BackColor="Yellow" DataSourceID="sdsOrientacion" DataTextField="Orientacion" DataValueField="IdOrientacion"></asp:DropDownList>
+                                                <asp:SqlDataSource ID="sdsOrientacion" runat="server" ConnectionString="<%$ ConnectionStrings:Sistemas_Maestra %>"
+                                                    SelectCommand="sp_VTA_Orientacion" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
                                     </label>
                                 </div>	
 
@@ -134,13 +138,13 @@
                                 <div class="col-md-2">
                                     <label for="Alicuota">
                                         Alicuota: &nbsp;
-                                        <asp:TextBox ID="txtAlicuota" runat="server" Width="80px" CssClass="BordeRadio10" BackColor="Yellow" MaxLength="50" Enabled="False"></asp:TextBox>
+                                        <asp:TextBox ID="txtAlicuota" runat="server" Width="80px" CssClass="BordeRadio10" BackColor="Yellow" MaxLength="50"></asp:TextBox>
                                     </label>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="NumeroRol">
                                         Número Rol: &nbsp;
-                                        <asp:TextBox ID="txtNumeroRol" runat="server" Width="80px" CssClass="BordeRadio10" BackColor="Yellow" MaxLength="10" Enabled="False"></asp:TextBox>
+                                        <asp:TextBox ID="txtNumeroRol" runat="server" Width="80px" CssClass="BordeRadio10" BackColor="Yellow" MaxLength="10"></asp:TextBox>
                                     </label>
                                 </div>
 							</div>
@@ -245,6 +249,122 @@
                         </div>
                     </fieldset>
                     <br />
+                    <br />
+                    <fieldset class="principal">
+                        <legend>
+                            <asp:Label ID="lblTituloAsociacion" runat="server" Text=" Asociación vía N° Rol" CssClass="principal"></asp:Label>
+                        </legend>
+                       <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="Tipo Inmueble">
+                                        Tipo Inmueble: &nbsp;
+                                        <asp:DropDownList ID="ddlTipoInmueble" runat="server" CssClass="BordeRadio10" DataSourceID="sdsTipoInmueble" DataTextField="Nombre" DataValueField="IdTipoInmueble"></asp:DropDownList>
+                                        <asp:SqlDataSource ID="sdsTipoInmueble" runat="server" ConnectionString="<%$ ConnectionStrings:Sistemas_Maestra %>"
+                                            SelectCommand="sp_VTA_TipoInmueble" SelectCommandType="StoredProcedure"></asp:SqlDataSource>       
+                                    </label>
+                                </div>
+                                <div class="col-md-2" style="text-align:right">
+                                    <label for="Buscar">
+                                        <asp:LinkButton ID="lnkBuscar" runat="server" CssClass="botoMaestra btn" OnClick="lnkBuscar_Click" OnClientClick="ValidaProyecto();">
+                                            Buscar <span class="oi oi-magnifying-glass"></span>
+                                        </asp:LinkButton>
+                                    </label>
+                                </div>
+                            </div> 
+
+                           <div class="row">
+                               <br />
+                               <div class="col-md-6">
+                                    <asp:GridView ID="gvInmuebles" runat="server" CellPadding="4" AutoGenerateColumns="False"
+                                            DataKeyNames="IdInmueble"
+                                            OnDataBound="gvInmuebles_DataBound" OnRowDataBound="gvInmuebles_RowDataBound"
+                                            AllowPaging="True" AllowSorting="True" OnPageIndexChanging="gvInmuebles_PageIndexChanging" onpageindexchanged="gvProducts_PageIndexChanged" CssClass="grid_data" PageSize="5">
+                                        <AlternatingRowStyle CssClass="grid_linea_alterna" />
+                                        <Columns>
+    <%--                                        <asp:templatefield>
+                                                <HeaderTemplate>
+                                                  <asp:CheckBox ID="checkAll" runat="server" OnCheckedChanged="checkTodos_CheckedChanged"  AutoPostBack="true"/>
+                                                </HeaderTemplate> 
+				                                <itemtemplate>
+					                                <asp:checkbox id="ChkEdicion" runat="server" OnCheckedChanged="checkListado_CheckedChanged" AutoPostBack="true" />
+				                                </itemtemplate>
+			                                </asp:templatefield>--%>
+                                            <asp:BoundField DataField="IdInmueble" HeaderText="Id Inmueble" ReadOnly="True" SortExpression="IdInmueble" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="Descripcion" HeaderText="Descripción" ReadOnly="True" SortExpression="Descripcion" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="Edificio" HeaderText="Edificio" ReadOnly="True" SortExpression="Edificio" HeaderStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="modeloInmueble" HeaderText="Modelo" ReadOnly="True" SortExpression="modeloInmueble" HeaderStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="M2Terreno" HeaderText="Terraza" ReadOnly="True" SortExpression="M2Terreno" HeaderStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="M2" HeaderText="M2 Util" ReadOnly="True" SortExpression="M2" HeaderStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="Numero" HeaderText="Numero" ReadOnly="True" SortExpression="Numero" HeaderStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="Estado" HeaderText="Estado" ReadOnly="True" SortExpression="Estado" HeaderStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="NumeroRol" HeaderText="Nro. Rol" ReadOnly="True" SortExpression="NumeroRol" HeaderStyle-Font-Underline="true" />
+                                            <asp:TemplateField HeaderText="Asociar" ItemStyle-HorizontalAlign="Center">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="btnAsociar" CssClass="btn grid_boton" runat="server" Text="Editar" Onclick="btnAsociar_Click" ForeColor="#ffffff" ToolTip="Asociar Inmueble"> <span class="iconify" data-icon="mdi:arrow-collapse" data-inline="false"></span>
+                                                    </asp:LinkButton>
+                                                    <asp:HiddenField ID="HiddenFieldDifferentUsers" Value='<%# Eval("IdInmueble") + "|"+ Eval("NumeroRol") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                        <FooterStyle CssClass="grid_footer" />
+                                        <HeaderStyle CssClass="grid_header" />
+                                        <PagerStyle CssClass="grid_pager" HorizontalAlign="Center" />
+                                        <RowStyle CssClass="grid_row" />
+                                        <SelectedRowStyle CssClass="grid_selected_row" />
+                                        <SortedAscendingCellStyle CssClass="grid_selected_row_asc" />
+                                        <SortedAscendingHeaderStyle CssClass="grid_selected_header_asc" />
+                                        <SortedDescendingCellStyle CssClass="grid_selected_row_des" />
+                                        <SortedDescendingHeaderStyle CssClass="grid_selected_header_des" />
+                                    </asp:GridView>
+                                    <br />
+                                    <br />
+                                </div>
+
+
+
+                               <div class="col-md-6">
+                                    <asp:GridView ID="gvAsociadoRol" runat="server" CellPadding="4" AutoGenerateColumns="False"
+                                            DataKeyNames="IdInmuebleA"
+                                            OnDataBound="gvAsociadoRol_DataBound" OnRowDataBound="gvAsociadoRol_RowDataBound"
+                                            AllowPaging="True" AllowSorting="True" OnPageIndexChanging="gvAsociadoRol_PageIndexChanging" onpageindexchanged="gvAsociadoRol_PageIndexChanged" CssClass="grid_data" PageSize="5">
+                                        <AlternatingRowStyle CssClass="grid_linea_alterna" />
+                                        <Columns>
+                                            <asp:BoundField DataField="NumeroRolA" HeaderText="Rol" ReadOnly="True" SortExpression="NumeroRolA" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="Descripcion" HeaderText="Descripción" ReadOnly="True" SortExpression="Descripcion" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="Edificio" HeaderText="Edificio" ReadOnly="True" SortExpression="Edificio" HeaderStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="modeloInmueble" HeaderText="Modelo" ReadOnly="True" SortExpression="modeloInmueble" HeaderStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="M2Terreno" HeaderText="Terraza" ReadOnly="True" SortExpression="M2Terreno" HeaderStyle-Font-Underline="true" />
+                                            <%--<asp:BoundField DataField="M2" HeaderText="M2 Util" ReadOnly="True" SortExpression="M2" HeaderStyle-Font-Underline="true" />--%>
+                                            <%--<asp:BoundField DataField="Numero" HeaderText="Numero" ReadOnly="True" SortExpression="Numero" HeaderStyle-Font-Underline="true" />--%>
+                                            <asp:BoundField DataField="Estado" HeaderText="Estado" ReadOnly="True" SortExpression="Estado" HeaderStyle-Font-Underline="true" />
+                                            <asp:TemplateField HeaderText="Eliminar" ItemStyle-HorizontalAlign="Center">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="btnEliminarAsociacion" CssClass="btn grid_boton" runat="server" Text="Eliminar" OnClick="btnEliminarInmueble_Click" ForeColor="#ffffff" ToolTip="Eliminar Inmueble"> <i class="oi oi-trash"></i>
+                                                    </asp:LinkButton>
+                                                    <asp:HiddenField ID="HiddenFieldDifferentUsers" Value='<%# Eval("IdInmuebleA") + "|"+ Eval("IdInmuebleB") + "|"+ Eval("NumeroRolA") + "|"+Eval("NumeroRolB") %>' runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                        <FooterStyle CssClass="grid_footer" />
+                                        <HeaderStyle CssClass="grid_header" />
+                                        <PagerStyle CssClass="grid_pager" HorizontalAlign="Center" />
+                                        <RowStyle CssClass="grid_row" />
+                                        <SelectedRowStyle CssClass="grid_selected_row" />
+                                        <SortedAscendingCellStyle CssClass="grid_selected_row_asc" />
+                                        <SortedAscendingHeaderStyle CssClass="grid_selected_header_asc" />
+                                        <SortedDescendingCellStyle CssClass="grid_selected_row_des" />
+                                        <SortedDescendingHeaderStyle CssClass="grid_selected_header_des" />
+                                    </asp:GridView>
+                                    <br />
+                                    <br />
+                                </div>
+                            </div>
+                           <br />
+                        <br />
+                        </div>
+               
+                    </fieldset>
                 </td>
             </tr>
         </table>

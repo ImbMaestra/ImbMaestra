@@ -99,140 +99,107 @@
                             <%--<asp:TextBox ID="txtProyecto"  runat="server" Width="200px"  CssClass="BordeRadio10" ></asp:TextBox>--%>
                         </legend>
                         <div class="container-fluid">
-                            <br />  
                             <div class="row">
-                                <div class="col-md-2">
-                                    <label for="Terraza"> <!--M2Terreno-->
+                                <div class="col-md-2" style="text-align:right">
+                                    <label for="Terraza" > <!--M2Terreno-->
                                         Cantidad a modificar:
                                     </label>
                                 </div>
-                                <div class="col-md-3">
-                                    <asp:TextBox ID="txtCantidad" style="text-align:right" runat="server" Width="215px" CssClass="BordeRadio10" enabled="false"></asp:TextBox>
+                                <div class="col-md-2" style="text-align:left">
+                                    <asp:TextBox ID="txtCantidad" style="text-align:right" runat="server" Width="215px"  CssClass="BordeRadio10" enabled="false"></asp:TextBox>
                                 </div>
-                                
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-2" style="text-align:right">
                                     <label for="Terraza"> <!--M2Terreno-->
                                         Proyecto:
                                     </label>
                                 </div>
-                                <div class="col-md-3">
-                                    <asp:TextBox ID="txtProyecto" style="text-align:right" runat="server" Width="215px" CssClass="BordeRadio10" enabled="false"></asp:TextBox>
+                                <div class="col-md-2" style="text-align:left">
+                                    <asp:TextBox ID="txtProyecto" style="text-align:right" runat="server" Width="215px"  CssClass="BordeRadio10" enabled="false"></asp:TextBox>
                                 </div>
-                                
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label for="Terraza"> <!--M2Terreno-->
+                                <div class="col-md-2" style="text-align:right">
+                                    <label for="M2 Terraza"> <!--M2Terreno-->
                                         M2 Terraza:
                                     </label>
                                 </div>
-                                <div class="col-md-3">
-                                    <asp:TextBox ID="txtM2Terraza" style="text-align:right" runat="server" Width="215px" MaxLength="8" CssClass="BordeRadio10" onkeypress="return filterFloat(event,this);" autocomplete="off"></asp:TextBox>
+                                <div class="col-md-2" style="text-align:left">
+                                    <asp:TextBox ID="txtM2Terraza" style="text-align:right" runat="server" Width="215px"  MaxLength="8" CssClass="BordeRadio10" onkeypress="return filterFloat(event,this);" autocomplete="off"></asp:TextBox>
                                 </div>
-                                
                             </div>
-                            <br />
+                            </br>
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-2" style="text-align:right">
                                     <label for="M2 Util"> <!--M2-->
                                         M2 Util:
                                     </label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2" style="text-align:left">
                                     <asp:TextBox ID="txtMetroUtil" style="text-align:right" runat="server" Width="215px" MaxLength="8" CssClass="BordeRadio10" onkeypress="return filterFloat(event,this);" autocomplete="off"></asp:TextBox>
                                 </div>
-                            </div>
-                            <br />
-                                                        <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-2" style="text-align:right">
                                     <label for="Precio Lista">  <!-- -->
                                         Estado Inmueble:
                                     </label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2" style="text-align:left">
                                     <asp:DropDownList ID="ddlEstadoInmueble" runat="server" CssClass="BordeRadio10" DataSourceID="sdsEstadoInmueble" DataTextField="Estado" DataValueField="IdEstado" AutoPostBack="True" OnSelectedIndexChanged="ddlEstadoInmueble_SelectedIndexChanged"></asp:DropDownList>
                                         &nbsp;<asp:SqlDataSource ID="sdsEstadoInmueble" runat="server" ConnectionString="<%$ ConnectionStrings:Sistemas_Maestra %>"
                                             SelectCommand="sp_VTA_Estados_Inmuebles" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
                                 </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-2" style="text-align:right">
                                     <label for="Justificacion"> <!--Justificacion-->
                                         Justificacion:
                                     </label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <asp:TextBox ID="txtJustificacion" style="text-align:left" runat="server" Width="215px" MaxLength="50" CssClass="BordeRadio10" autocomplete="off"></asp:TextBox>
                                 </div>
                             </div>
-
-
-                            <br />
-
+     
                             <div class="row">
-                                 <div class="col-md-2"> 
-                                    
-                                </div>
-                                <div class="col-md-3">
+                                <div class="col-md-5" style="text-align:center">
                                     <asp:RadioButton ID="RdoPrecioLista1" runat="server" GroupName="PrecioLista" Text="Fijar" />
                                    &nbsp;
                                     <asp:RadioButton ID="RdoPrecioLista2" runat="server" GroupName="PrecioLista" Text="Aumento %" />
                                    &nbsp;
                                     <asp:RadioButton ID="RdoPrecioLista3" runat="server" GroupName="PrecioLista" Text="Aumento UF" />
+                                    &nbsp;
+                                    <asp:RadioButton ID="RdoPrecioLista4" runat="server" GroupName="PrecioLista" Text="Disminuye %" />
+                                   &nbsp;
+                                    <asp:RadioButton ID="RdoPrecioLista5" runat="server" GroupName="PrecioLista" Text="Disminuye UF" />
+                                </div>
+                                <div class="col-md-7"> 
+                                    
                                 </div>
                             </div>
 
                             <div class="row">
-                                 <div class="col-md-2"> 
+                                 <div class="col-md-2" style="text-align:right"> 
                                      <label for="Precio Lista">  <!--PrecioLista-->
                                         Precio Lista:
                                     </label>
                                 </div>
-                                <div class="col-md-3">
-                                    &nbsp;&nbsp;
-                                    <asp:RadioButton ID="RdoPrecioLista4" runat="server" GroupName="PrecioLista" Text="Disminuye %" />
-                                   &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <asp:RadioButton ID="RdoPrecioLista5" runat="server" GroupName="PrecioLista" Text="Disminuye UF" />
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-2" style="text-align:left">
                                     <asp:hiddenfield id="hddTipoPrecioLista" value="0" runat="server"/>
-                                </div>
-                                <div class="col-md-3">
                                     <asp:TextBox ID="txtPrecioLista" style="text-align:right" runat="server" Width="215px" MaxLength="4" CssClass="BordeRadio10" onkeypress="return isNumberKey(event)" autocomplete="off"></asp:TextBox>
                                 </div>
-                            </div>
-                            <br />
-
-                            <div class="row">
-                                 <div class="col-md-2">
+                                <div class="col-md-2" style="text-align:right">
                                     <label for="Alicuota">  <!--Alicuota-->
                                         Alicuota:
                                     </label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2" style="text-align:left">
                                     <asp:TextBox ID="txtAlicuota" style="text-align:right" runat="server" Width="215px" MaxLength="50" CssClass="BordeRadio10" autocomplete="off"></asp:TextBox>
                                 </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                 <div class="col-md-2">
+                                 <div class="col-md-2" style="text-align:right">
                                     <label for="Numero Rol">  <!--NumeroRol-->
                                         Numero Rol:
                                     </label>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2" style="text-align:left">
                                     <asp:TextBox ID="txtNumeroRol" style="text-align:right" runat="server" Width="215px" MaxLength="10" CssClass="BordeRadio10" autocomplete="off"></asp:TextBox>
                                 </div>
-                               
                             </div>
+                               
                             <br />
                             <div class="row">
                                 <span style="font-weight:bold;">
@@ -247,9 +214,55 @@
 
                     </fieldset>
                     <!-- FIN Filtros -->
-					<br />
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <br />
+                    <br />
+                    <div id="GrillaInmueble">
+                        <fieldset class="principal">
+                            <legend>
+                                <asp:Label ID="lblLista" runat="server" Text=" Visualización datos" CssClass="principal"></asp:Label>
+                            </legend>
+
+                            <asp:GridView ID="gvInmueblesVista" runat="server" CellPadding="4" AutoGenerateColumns="False"
+                                    DataKeyNames="IdInmueble" 
+                                    OnDataBound="gvInmueblesVista_DataBound" OnRowDataBound="gvInmueblesVista_RowDataBound"
+                                    AllowPaging="True" AllowSorting="false" OnPageIndexChanging="gvInmueblesVista_PageIndexChanging" onpageindexchanged="gvProducts_PageIndexChanged" CssClass="grid_data" PageSize="10">
+                                <AlternatingRowStyle CssClass="grid_linea_alterna" />
+                                <Columns>
+                                    <asp:BoundField DataField="IdInmueble" HeaderText="Id Inmueble" ReadOnly="True" SortExpression="IdInmueble" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="Terraza" HeaderText="Terraza" ReadOnly="True" SortExpression="Terraza" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="M2Util" HeaderText="M2 Util" ReadOnly="True" SortExpression="M2Util" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="Piso" HeaderText="Piso" ReadOnly="True" SortExpression="Piso" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="PrecioLista" HeaderText="Precio Lista" ReadOnly="True" SortExpression="PrecioLista" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="EstadoInmueble" HeaderText="Estado" ReadOnly="True" SortExpression="EstadoInmueble" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="NumeroRol" HeaderText="Numero Rol" ReadOnly="True" SortExpression="NumeroRol" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="Alicuota" HeaderText="Alicuota" ReadOnly="True" SortExpression="Alicuota" HeaderStyle-Font-Underline="true" />
+                                    
+                                </Columns>
+                                <FooterStyle CssClass="grid_footer" />
+                                <HeaderStyle CssClass="grid_header" />
+                                <PagerStyle CssClass="grid_pager" HorizontalAlign="Center" />
+                                <RowStyle CssClass="grid_row" />
+                                <SelectedRowStyle CssClass="grid_selected_row" />
+                                <SortedAscendingCellStyle CssClass="grid_selected_row_asc" />
+                                <SortedAscendingHeaderStyle CssClass="grid_selected_header_asc" />
+                                <SortedDescendingCellStyle CssClass="grid_selected_row_des" />
+                                <SortedDescendingHeaderStyle CssClass="grid_selected_header_des" />
+                            </asp:GridView>
+                            <br />
+                            <br />
+
+
+                        </fieldset>
+                    </div>
+                </td>
+
+            </tr>
+
+
         </table>
         <br />
         <table class="principal">

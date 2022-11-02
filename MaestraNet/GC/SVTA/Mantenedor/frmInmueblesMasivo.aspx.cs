@@ -7,11 +7,23 @@ using System.Web.UI.WebControls;
 using System.Data;
 using MaestraNet.Entidad;
 using MaestraNet.Data;
+using MaestraNet.Util;
+using System.Windows.Forms;
 
 namespace MaestraNet.GC.SVTA.Mantenedor
 {
     public partial class frmInmueblesMasivo : System.Web.UI.Page
     {
+        private string SortExpression
+        {
+            get { return ViewState["SortExpression"] != null ? ViewState["SortExpression"].ToString() : "nombre"; }
+            set { ViewState["SortExpression"] = value; }
+        }
+        private string SortDirection
+        {
+            get { return ViewState["SortDirection"] != null ? ViewState["SortDirection"].ToString() : "ASC"; }
+            set { ViewState["SortDirection"] = value; }
+        }
 
         private void Alerta(string msg, int tipo, bool OcultaGrilla = false)
         {
@@ -62,8 +74,11 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 {
                     List<int> productsIdSel = HttpContext.Current.Session["ProdSelection"] as List<int>;
                     txtCantidad.Text = productsIdSel.Count.ToString();
+
+                    verificaEstadosInmueble();
+                    cargaGrillaActual();
                 }
-                //HabilitarJustificacion();
+
                 HabilitaCampos();
                 HabilitarJustificacion();
             }
@@ -119,7 +134,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         {
             BLInmueble blInmueble = new BLInmueble();
             Inmueble oInmueble = new Inmueble();
-            cs.dbTools db = new cs.dbTools();
+            //cs.dbTools db = new cs.dbTools();
             //lblUsuario.Text = db.Nombre_Usuario(Session["IdUsuario"].ToString());
 
             try
@@ -128,13 +143,11 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 oInmueble.M2Util = Convert.ToDouble(txtMetroUtil.Text == "" ? "0" : txtMetroUtil.Text);
                 oInmueble.PrecioLista = Convert.ToInt32(txtPrecioLista.Text == "" ? "0" : txtPrecioLista.Text);
                 oInmueble.TipoPrecioLista = hddTipoPrecioLista.Value;
-
                 oInmueble.IdEstadoInmueble = Convert.ToInt32(ddlEstadoInmueble.Text);
-                oInmueble.JustificacionTipoInmueble = txtJustificacion.Text.Trim();
+                oInmueble.JustificacionEstadoInmueble = txtJustificacion.Text.Trim();
                 oInmueble.Alicuota = txtAlicuota.Text.Trim();
                 oInmueble.NumeroRol = txtNumeroRol.Text.Trim();
-                oInmueble.Usuario = db.Nombre_Usuario(Session["IdUsuario"].ToString());
-                //oInmueble.Usuario = Session["IdUsuario"].ToString();
+                oInmueble.Usuario = Session["IdUsuario"].ToString();
 
                 List<int> dt = (List<int>)HttpContext.Current.Session["ProdSelection"];
 
@@ -163,7 +176,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             txtAlicuota.Text = "";
             txtNumeroRol.Text = "";
         }
-
 
         private void ValidaTipoPrecioLista()
         {
@@ -201,10 +213,58 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             {
                 txtPrecioLista.Enabled = true;
             }
-            else if (ddlEstadoInmueble.SelectedValue == "1" || ddlEstadoInmueble.SelectedValue == "2" || ddlEstadoInmueble.SelectedValue == "3" || ddlEstadoInmueble.SelectedValue == "4" || ddlEstadoInmueble.SelectedValue == "5" || ddlEstadoInmueble.SelectedValue == "-1" || ddlEstadoInmueble.SelectedValue == "")
+            else if (ddlEstadoInmueble.SelectedValue == "1" || ddlEstadoInmueble.SelectedValue == "2" || ddlEstadoInmueble.SelectedValue == "3" || ddlEstadoInmueble.SelectedValue == "4" || ddlEstadoInmueble.SelectedValue == "5")
             {
                 txtPrecioLista.Text = "";
                 txtPrecioLista.Enabled = false;
+            }
+            else if(ddlEstadoInmueble.SelectedValue == "-1")
+            {
+                //Por defecto debe estar habilitado el campo PrecioLista si el estado es Disponible
+                //Recorrer la lista y verificar si todos los inmuebles están en estado Disponible
+                verificaEstadosInmueble();
+            }   
+        }
+
+        private void verificaEstadosInmueble()
+        {
+            int valida = 0;
+            if (Session["ListadoInmuebles"] != null)
+            {
+                List<Inmueble> list1 = (List<Inmueble>)Session["ListadoInmuebles"];
+
+                foreach (var item in list1)
+                {
+                    if (item.IdEstadoInmueble == 0 || item.IdEstadoInmueble == 6) //0-Estado Disponible / 6-Bloqueado
+                    {
+                        valida = 0;
+                    }
+                    else
+                    {
+                        valida = 1;
+                        break;
+                    }
+                    
+                }
+
+                //Cuando se seleccione sólo un elemento, dejará modificar
+                if (list1.Count == 1)
+                {
+                    valida = 0;
+                }
+            }
+
+            if (valida == 1)
+            {
+                txtPrecioLista.Enabled = false;
+                txtPrecioLista.Text = "";
+                Alerta("Uno de los estados es distinto a Disponible y Bloqueado, no es posible grabar", 4);
+                lnkConfirmModificar.Visible = false;
+            }
+            else
+            {
+                txtPrecioLista.Enabled = true;
+                lnkConfirmModificar.Visible = true;
             }
         }
 
@@ -224,5 +284,176 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 txtNumeroRol.Text = "";
             }
         }
+
+        private void cargaGrillaActual()
+        {
+            //int valida = 0;
+            if (Session["ListadoInmuebles"] != null)
+            {
+                //DataSet dsInmueble;
+                //List<Inmueble> list1 = (List<Inmueble>)Session["ListadoInmuebles"];
+                //dsInmueble = list1;
+
+                gvInmueblesVista.DataSource = (List<Inmueble>)Session["ListadoInmuebles"];
+                gvInmueblesVista.DataBind();
+
+
+                //foreach (DataGridViewColumn Col in DgvTablas)
+                //{
+                //    Col.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //}
+
+            }
+
+        }
+
+        protected void gvInmueblesVista_DataBound(object sender, EventArgs e)
+        {
+            //int sortedColumnPosition = 0;
+            //LinkButton lnkbtn;
+            //CheckBox chklnk;
+            //string hex = "#E9E7E2";
+            //System.Drawing.Color _color;
+
+            //if (gvInmuebles.HeaderRow == null)
+            //    return;
+            //foreach (TableCell cell in gvInmuebles.HeaderRow.Cells)
+            //{
+            //    if (cell.Controls.Count > 0)
+            //    {
+            //        if (cell.Controls.Count == 3)
+            //        {
+            //            chklnk = cell.Controls[1] as CheckBox;
+            //        }
+            //        else
+            //        {
+            //            lnkbtn = (LinkButton)cell.Controls[0];
+            //            if (lnkbtn.CommandArgument == SortExpression)
+            //            {
+            //                break;
+            //            }
+            //        }
+
+            //    }
+            //    sortedColumnPosition++;
+            //}
+            //if (!string.IsNullOrEmpty(SortExpression))
+            //{
+            //    foreach (GridViewRow row in gvInmuebles.Rows)
+            //    {
+            //        if (sortedColumnPosition < 16)
+            //        {
+            //            _color = System.Drawing.ColorTranslator.FromHtml(hex);
+            //            row.Cells[sortedColumnPosition].BackColor = _color;
+            //        }
+            //    }
+            //}
+        }
+
+        protected void gvInmueblesVista_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            //Pasa por aquí cada vez que carga una fila en la grilla
+            //string hex = "#B13261";
+            //System.Drawing.Color _color;
+            //LinkButton lnkbtn;
+            //CheckBox chklnk;
+            //if (e.Row.RowType == DataControlRowType.Header)
+            //{
+            //    foreach (TableCell cell in e.Row.Cells)
+            //    {
+            //        if (cell.Controls.Count > 0)
+            //        {
+            //            if (cell.Controls.Count == 3)
+            //            {
+            //                //var a = cell.Controls[2].Controls.GetType();
+            //                chklnk = cell.Controls[1] as CheckBox;
+            //            }
+            //            else
+            //            {
+            //                lnkbtn = cell.Controls[0] as LinkButton;
+            //                if (!string.IsNullOrEmpty(lnkbtn.CommandArgument))
+            //                {
+            //                    if (lnkbtn.CommandArgument == SortExpression)
+            //                    {
+            //                        _color = System.Drawing.ColorTranslator.FromHtml(hex);
+            //                        cell.BackColor = _color;
+            //                        lnkbtn.BackColor = _color;
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+        }
+
+        protected void gvInmueblesVista_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            ////-----se guarda el estado actual de los check de la página en curso.----------
+            //if (!CheckBoxAllCabecera)
+            //{
+            //    ProductsSelectionManager.KeepSelection((GridView)sender);
+            //}
+            ////---------------------------------------------------------------
+
+            //gvInmuebles.PageIndex = e.NewPageIndex;
+            //DataTable dt = (DataTable)ViewState["Inmueble"];
+            //dt.DefaultView.Sort = SortExpression + " " + this.SortDirection;
+
+            //gvInmuebles.DataSource = dt;
+
+            //gvInmuebles.DataBind();
+
+            //verificaEstadoCheckBoxAll();
+            //marcaDesmarcaCheckBoxAll();
+        }
+
+        protected void gvProducts_PageIndexChanged(object sender, EventArgs e)
+        {
+            //se restablece las marcas que pudiera haber para la misma.
+            //if (!CheckBoxAllCabecera)
+            //{
+            //    ProductsSelectionManager.RestoreSelection((GridView)sender);
+            //}
+        }
+
+        //protected void gvInmueblesVista_Sorting(object sender, GridViewSortEventArgs e)
+        //{
+        //    //Pasa por aquí al hacer click en los títulos
+        //    ////-----se guarda el estado actual de los check de la página en curso.----------
+        //    //if (!CheckBoxAllCabecera)
+        //    //{
+        //    //    ProductsSelectionManager.KeepSelection((GridView)sender);
+        //    //}
+        //    ////---------------------------------------------------------------
+        //    Funciones ofunciones = new Funciones();
+        //    DataTable dtOrden = new DataTable();
+
+        //    SortExpression = e.SortExpression;
+        //    SortDirection = SortDirection == "ASC" ? "DESC" : "ASC";
+
+        //    //dtOrden = ofunciones.BindGrid((DataTable)ViewState["Inmueble"], SortDirection, e.SortExpression);//ListadoInmuebles
+        //    //dtOrden = ofunciones.BindGrid((List<Inmueble>)Session["ListadoInmuebles"], SortDirection, e.SortExpression);
+
+        //    gvInmueblesVista.Sort(SortExpression, System.Web.UI.WebControls.SortDirection.Ascending);
+
+        //    //ViewState["Inmueble"] = dtOrden;
+        //    //gvInmuebles.DataSource = dtOrden;
+        //    //gvInmuebles.DataBind();
+
+        //    ////se restablece las marcas que pudiera haber para la misma.
+        //    //if (!CheckBoxAllCabecera)
+        //    //{
+        //    //    ProductsSelectionManager.RestoreSelection((GridView)sender);
+        //    //}
+        //}
+
+        //private void gdvSort_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        //{
+        //    for (int i = 0; i < gdvSort.Columns.Count; i++)
+        //    {
+        //        gdvSort.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+        //    }
+        //}
+
     }
 }

@@ -10,6 +10,7 @@ using MaestraNet.Util;
 using System.Data.OleDb;
 using System.IO;
 using System.Collections;
+using MaestraNet.Entidad;
 
 namespace MaestraNet.GC.SVTA.Mantenedor
 {
@@ -88,11 +89,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["IdPerfil"] == null)
-            //{
-            //    Response.Redirect("frmInmueblesNew.aspx");
-            //}
-
             if (!IsPostBack)
             {
                 CheckBoxAllCabecera = false;
@@ -124,11 +120,17 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             else
                 iPiso = Convert.ToInt32(txtPiso.Text);
 
-
             try
             {
-                //dsInmueble = oInmueble.ListaInmueble(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), iPiso);
-                dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), iPiso, ddlOrientacion.SelectedValue);
+                Session["datosBusquedaInmueble"] = ddlProyecto.SelectedValue + "," +
+                                    ddlTipoInmueble.SelectedValue + "," +
+                                    ddlTorre.SelectedValue + "," +
+                                    ndepto + "," +
+                                    ddlModeloInmueble.SelectedValue + "," +
+                                    Convert.ToString(iPiso) + "," +
+                                    ddlOrientacion.SelectedValue;
+
+                dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), iPiso, Convert.ToInt32(ddlOrientacion.SelectedValue));
                 ViewState["Inmueble"] = dsInmueble.Tables[0];
 
                 SortExpression = "Descripcion";
@@ -147,7 +149,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             {
                 Alerta(ex.Message, 1);
                 return;
-
             }
         }
 
@@ -243,6 +244,12 @@ namespace MaestraNet.GC.SVTA.Mantenedor
 
         protected void gvInmuebles_Sorting(object sender, GridViewSortEventArgs e)
         {
+            //-----se guarda el estado actual de los check de la página en curso.----------
+            if (!CheckBoxAllCabecera)
+            {
+                ProductsSelectionManager.KeepSelection((GridView)sender);
+            }
+            //---------------------------------------------------------------
             Funciones ofunciones = new Funciones();
             DataTable dtOrden = new DataTable();
 
@@ -254,6 +261,12 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             ViewState["Inmueble"] = dtOrden;
             gvInmuebles.DataSource = dtOrden;
             gvInmuebles.DataBind();
+
+            //se restablece las marcas que pudiera haber para la misma.
+            if (!CheckBoxAllCabecera)
+            {
+                ProductsSelectionManager.RestoreSelection((GridView)sender);
+            }
         }
 
         protected void gvInmuebles_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -406,7 +419,8 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             }
             try
             {
-                dsInmueble = oInmueble.ListaInmueble(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), Convert.ToInt32(txtPiso.Text));
+                //dsInmueble = oInmueble.ListaInmueble(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), Convert.ToInt32(txtPiso.Text));
+                dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), Convert.ToInt32(txtPiso.Text), Convert.ToInt32(ddlOrientacion.SelectedValue));
                 ViewState["Inmueble"] = dsInmueble.Tables[0];
 
                 SortExpression = "Descripcion";
@@ -610,6 +624,36 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             if (list1 == null)
             {
                 list1 = new List<int>();
+            }
+            else
+            {
+                //Recorrer tabla identificando los items de la lista
+                //Verificar el campo IdEstado, verificar que todos sean disponibles
+                List<Inmueble> list2 = new List<Inmueble>();
+
+                DataTable dt = (DataTable)ViewState["Inmueble"];
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    foreach (var item in list1)
+                    {
+                        if (item == Convert.ToInt32(dt.Rows[i]["IdInmueble"]))
+                        {
+                            Inmueble list3 = new Inmueble();
+                            list3.IdInmueble = Convert.ToInt32(dt.Rows[i]["IdInmueble"].ToString());
+                            list3.IdEstadoInmueble = Convert.ToInt32(dt.Rows[i]["IdEstado"]);
+                            list3.Terraza = Convert.ToInt32(dt.Rows[i]["M2Terreno"]);
+                            list3.M2Util = Convert.ToInt32(dt.Rows[i]["M2"]);
+                            list3.EstadoInmueble = dt.Rows[i]["Estado"].ToString();
+                            list3.JustificacionEstadoInmueble = dt.Rows[i]["JustificacionEstadoInmueble"].ToString();
+                            list3.PrecioLista = Convert.ToInt32(dt.Rows[i]["PrecioLista"]);
+                            list3.NumeroRol = dt.Rows[i]["NumeroRol"].ToString();
+                            list3.Alicuota = dt.Rows[i]["Alicuota"].ToString();
+                            list2.Add(list3);
+                        }
+                    }
+                }
+
+                Session["ListadoInmuebles"] = list2;
             }
 
             if (list1.Count == 0)

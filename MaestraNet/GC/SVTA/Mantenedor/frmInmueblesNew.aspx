@@ -135,7 +135,7 @@
                                 <div class="col-md-4">
                                             <label for="Orientacion">
                                                 Orientacion: &nbsp;
-                                                <asp:DropDownList ID="ddlOrientacion" runat="server" CssClass="BordeRadio10" DataSourceID="sdsOrientacion" DataTextField="Orientacion" DataValueField="Orientacion"></asp:DropDownList>
+                                                <asp:DropDownList ID="ddlOrientacion" runat="server" CssClass="BordeRadio10" DataSourceID="sdsOrientacion" DataTextField="Orientacion" DataValueField="IdOrientacion"></asp:DropDownList>
                                                 <asp:SqlDataSource ID="sdsOrientacion" runat="server" ConnectionString="<%$ ConnectionStrings:Sistemas_Maestra %>"
                                                     SelectCommand="sp_VTA_Orientacion" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
                                             </label>
@@ -231,7 +231,7 @@
                                     <asp:BoundField DataField="Orientacion" HeaderText="Orientacion" ReadOnly="True" SortExpression="Orientacion" HeaderStyle-Font-Underline="true" />
                                     <asp:BoundField DataField="Piso" HeaderText="Piso" ReadOnly="True" SortExpression="Piso" HeaderStyle-Font-Underline="true" />
                                     <asp:BoundField DataField="PrecioLista" HeaderText="Precio Lista" ReadOnly="True" SortExpression="PrecioLista" HeaderStyle-Font-Underline="true" />
-                                    <asp:BoundField DataField="EstadoInmueble" HeaderText="Estado" ReadOnly="True" SortExpression="EstadoInmueble" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="Estado" HeaderText="Estado" ReadOnly="True" SortExpression="Estado" HeaderStyle-Font-Underline="true" />
                                     <asp:TemplateField HeaderText="Inmueble Pack">
 													<ItemTemplate>
 														<asp:TextBox ID="txtInmueblePack" CssClass="BordeRadio10" runat="server"  Width="90px" Height="25px" Text='<%# Bind("IdInmueble_Pack") %>' onkeypress="return isNumberKey(event)"></asp:TextBox>

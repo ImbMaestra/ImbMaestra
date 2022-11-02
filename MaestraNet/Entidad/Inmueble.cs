@@ -17,7 +17,7 @@ namespace MaestraNet.Entidad
         { get; set; }
         public string Edificio
         { get; set; }
-         public string Observacion
+        public string Observacion
         { get; set; }
         public int NDepto
         { get; set; }
@@ -43,8 +43,13 @@ namespace MaestraNet.Entidad
         { get; set; }
         public string TipoPrecioLista
         { get; set; }
-        public string JustificacionTipoInmueble
+        public string JustificacionEstadoInmueble
         { get; set; }
+        public int IdOrientacion
+        { get; set; }
+        public string EstadoInmueble
+        { get; set; }
+
 
         //Para tipo Inmueble, consultar si se dejarán los atributos en otra clase
         public int IdTipoInmueble

@@ -168,6 +168,24 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         protected global::System.Web.UI.WebControls.TextBox txtNumeroRol;
 
         /// <summary>
+        /// Control lblLista.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLista;
+
+        /// <summary>
+        /// Control gvInmueblesVista.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvInmueblesVista;
+
+        /// <summary>
         /// Control lnkVolver.
         /// </summary>
         /// <remarks>

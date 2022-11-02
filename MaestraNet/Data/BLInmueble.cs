@@ -52,7 +52,7 @@ namespace MaestraNet.Data
             }
         }
 
-        public DataSet ListaInmueble2(int iIdProyecto, int iIdTipoModelo, string sTorre, int iNumero, int iModeloInmueble, int iPiso, string sOrientacion)
+        public DataSet ListaInmueble2(int iIdProyecto, int iIdTipoModelo, string sTorre, int iNumero, int iModeloInmueble, int iPiso, int iOrientacion)
         {
             SqlConnection oConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["Sistemas_Maestra"].ConnectionString);
             SqlCommand cmdInmueble = new SqlCommand();
@@ -71,7 +71,8 @@ namespace MaestraNet.Data
             cmdInmueble.Parameters.Add("@Numero", SqlDbType.Int).Value = iNumero;
             cmdInmueble.Parameters.Add("@idModeloInmueble", SqlDbType.Int).Value = iModeloInmueble;
             cmdInmueble.Parameters.Add("@Piso", SqlDbType.Int).Value = iPiso;
-            cmdInmueble.Parameters.Add("@Orientacion", SqlDbType.VarChar).Value = sOrientacion;
+            //cmdInmueble.Parameters.Add("@Orientacion", SqlDbType.VarChar).Value = sOrientacion;
+            cmdInmueble.Parameters.Add("@idOrientacion", SqlDbType.Int).Value = iOrientacion;
 
             daInmueble.SelectCommand = cmdInmueble;
 
@@ -270,7 +271,8 @@ namespace MaestraNet.Data
             cmdInmueble.Parameters.Add("@numero", SqlDbType.Int).Value = oInmueble.NDepto;
             cmdInmueble.Parameters.Add("@m2terreno", SqlDbType.Float).Value = oInmueble.Terraza;
             cmdInmueble.Parameters.Add("@m2", SqlDbType.Float).Value = oInmueble.M2Util;
-            cmdInmueble.Parameters.Add("@orientacion", SqlDbType.VarChar, 50).Value = oInmueble.Orientacion;
+            //cmdInmueble.Parameters.Add("@orientacion", SqlDbType.VarChar, 50).Value = oInmueble.Orientacion;
+            cmdInmueble.Parameters.Add("@idOrientacion", SqlDbType.Int).Value = oInmueble.IdOrientacion;
             cmdInmueble.Parameters.Add("@preciolista", SqlDbType.Int).Value = oInmueble.PrecioLista;
             cmdInmueble.Parameters.Add("@estadoinmueble", SqlDbType.Int).Value = oInmueble.IdEstadoInmueble;
             cmdInmueble.Parameters.Add("@logia", SqlDbType.Float).Value = oInmueble.Logia;
@@ -771,7 +773,7 @@ namespace MaestraNet.Data
                     cmdInmueble.Parameters.Add("@preciolista", SqlDbType.Int).Value = oInmueble.PrecioLista;
                     cmdInmueble.Parameters.Add("@TipoPrecioLista", SqlDbType.VarChar).Value = oInmueble.TipoPrecioLista;
                     cmdInmueble.Parameters.Add("@IdEstadoInmueble", SqlDbType.Int).Value = oInmueble.IdEstadoInmueble;
-                    cmdInmueble.Parameters.Add("@JustificacionTipoInmueble", SqlDbType.VarChar).Value = oInmueble.JustificacionTipoInmueble;
+                    cmdInmueble.Parameters.Add("@JustificacionEstadoInmueble", SqlDbType.VarChar).Value = oInmueble.JustificacionEstadoInmueble;
                     cmdInmueble.Parameters.Add("@Alicuota", SqlDbType.VarChar).Value = oInmueble.Alicuota;
                     cmdInmueble.Parameters.Add("@NumeroRol", SqlDbType.VarChar).Value = oInmueble.NumeroRol;
                     cmdInmueble.Parameters.Add("@Usuario", SqlDbType.VarChar).Value = oInmueble.Usuario;
@@ -789,5 +791,107 @@ namespace MaestraNet.Data
             }
         }
 
+        public DataTable ConsultaTipoOrientacion()
+        {
+            SqlConnection oConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["Sistemas_Maestra"].ConnectionString);
+            SqlCommand cmdInmueble = new SqlCommand();
+            SqlDataAdapter daInmueble = new SqlDataAdapter();
+            //DataSet dsInmueble = new DataSet();
+            DataTable dtOrientacion = new DataTable();
+
+            cmdInmueble.CommandText = "[sp_VTA_Orientacion]";
+
+            cmdInmueble.CommandType = CommandType.StoredProcedure;
+
+            cmdInmueble.Connection = oConnection;
+
+            daInmueble.SelectCommand = cmdInmueble;
+
+            try
+            {
+                oConnection.Open();
+                daInmueble.Fill(dtOrientacion);
+                return dtOrientacion;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                oConnection.Close();
+            }
+        }
+
+
+        public void AsociaInmuebleRol(int idInmuebleA, int idInmuebleB, string NroRolA, string NroRolB, int Activa)
+        {
+            SqlConnection oConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["Sistemas_Maestra"].ConnectionString);
+            SqlCommand cmdProyecto = new SqlCommand();
+            int iResultado;
+
+            cmdProyecto.CommandText = "sp_VTA_AsociaInmuebleRol";
+
+            cmdProyecto.CommandType = CommandType.StoredProcedure;
+
+            cmdProyecto.Connection = oConnection;
+
+            cmdProyecto.Parameters.Add("@idInmuebleA", SqlDbType.Int).Value = idInmuebleA;
+            cmdProyecto.Parameters.Add("@idInmuebleB", SqlDbType.Int).Value = idInmuebleB;
+            cmdProyecto.Parameters.Add("@NumeroRolA", SqlDbType.VarChar).Value = NroRolA;
+            cmdProyecto.Parameters.Add("@NumeroRolB", SqlDbType.VarChar).Value = NroRolB;
+            cmdProyecto.Parameters.Add("@Activo", SqlDbType.Int).Value = Activa;
+
+            try
+            {
+                oConnection.Open();
+                iResultado = cmdProyecto.ExecuteNonQuery();
+                //iResultado = (int)cmdProyecto.ExecuteScalar();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                oConnection.Close();
+            }
+        }
+
+        public DataSet ListaAsociaInmuebleRol(int IdInmueble)
+        {
+            SqlConnection oConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["Sistemas_Maestra"].ConnectionString);
+            SqlCommand cmdInmueble = new SqlCommand();
+            SqlDataAdapter daInmueble = new SqlDataAdapter();
+            DataSet dsInmueble = new DataSet();
+
+            cmdInmueble.CommandText = "sp_VTA_ConsultaAsociaInmuebleRol";
+
+            cmdInmueble.CommandType = CommandType.StoredProcedure;
+
+            cmdInmueble.Connection = oConnection;
+
+            cmdInmueble.Parameters.Add("@idInmueble", SqlDbType.Int).Value = IdInmueble;
+
+            daInmueble.SelectCommand = cmdInmueble;
+
+            try
+            {
+                oConnection.Open();
+                daInmueble.Fill(dsInmueble);
+                return dsInmueble;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                oConnection.Close();
+            }
+        }
     }
 }
