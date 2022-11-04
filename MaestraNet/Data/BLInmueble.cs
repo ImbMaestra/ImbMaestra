@@ -256,7 +256,7 @@ namespace MaestraNet.Data
             SqlCommand cmdInmueble = new SqlCommand();
 
 
-            cmdInmueble.CommandText = "sp_VTA_ModificaInmueble";
+            cmdInmueble.CommandText = "sp_VTA_ModificaInmueble2";
 
             cmdInmueble.CommandType = CommandType.StoredProcedure;
 
@@ -874,6 +874,41 @@ namespace MaestraNet.Data
             cmdInmueble.Connection = oConnection;
 
             cmdInmueble.Parameters.Add("@idInmueble", SqlDbType.Int).Value = IdInmueble;
+
+            daInmueble.SelectCommand = cmdInmueble;
+
+            try
+            {
+                oConnection.Open();
+                daInmueble.Fill(dsInmueble);
+                return dsInmueble;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                oConnection.Close();
+            }
+        }
+
+        public DataSet ConsultaInmuebleTipo(int idInmueble)
+        {
+            SqlConnection oConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["Sistemas_Maestra"].ConnectionString);
+            SqlCommand cmdInmueble = new SqlCommand();
+            SqlDataAdapter daInmueble = new SqlDataAdapter();
+            DataSet dsInmueble = new DataSet();
+
+
+            cmdInmueble.CommandText = "[sp_VTA_ConsultaInmuebleTipo]";
+
+            cmdInmueble.CommandType = CommandType.StoredProcedure;
+
+            cmdInmueble.Connection = oConnection;
+
+            cmdInmueble.Parameters.Add("@IdInmueble", SqlDbType.Int).Value = idInmueble;
 
             daInmueble.SelectCommand = cmdInmueble;
 

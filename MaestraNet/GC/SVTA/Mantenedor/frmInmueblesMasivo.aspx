@@ -13,6 +13,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
     <script language="Javascript">
+    //const { debug } = require("node:util");
+
         function showAlertaInformar() {
             $('#modalAlertaInformar').modal('show');
         }
@@ -23,6 +25,10 @@
 
         function showAlertaAlert() {
             $('#modalAlertaAlert').modal('show');
+        }
+
+        function showAlertaConfirmar() {
+            $('#modalAlertaConfirmar').modal('show');
         }
 
         function isNumberKey(evt) {
@@ -81,6 +87,80 @@
         }
 
 
+        $(document).ready(function () {
+            $("#btnAceptarCambios").click(function (e) {
+                var url = "frmInmueblesMasivo.aspx/Prueba";
+                //var url = "@Url.Content('~/frmInmueblesMasivo.aspx/Prueba')";
+                //$.ajax({
+                //    type: 'POST',
+                //    //url: baseUrl + url,
+                //    //data: "{}",
+                //    url: url,
+                //    dataType: 'json',
+                //    contentType: "application/json; charset=utf-8",
+                //    success: function (resp) {
+                //        //alert("Va");
+                //        //$("#AvisoCierreSession").modal("hide");
+                //    }
+                //    , error: function (ex) {
+                //        alert('Error al Reactivar Sesión ' + ex);
+                //    }
+                //});
+                //return false;
+
+
+
+                //$.ajax({
+                //    type: "POST",
+                //    url: url,
+                //    data: '{TempId:1}',
+                //    contentType: "application/json; charset=utf-8",
+                //    dataType: "json",
+                //    success: function (data) {
+                //            alert('Data: ' + data);
+                //        },
+                //    error: function (result) {
+                //        alert("Error" + result);
+                //    }
+                //});
+
+                $.ajax({
+                    type: "POST",
+                    url: 'frmInmueblesMasivo.aspx/Prueba',
+                    data: '{TempId: 1}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        // fail-safe for older ASP.NET frameworks
+                        //var data = response.hasOwnProperty("d") ? response.d : response;
+                        alert(response);  //Changed here
+                    },
+                    failure: function (response) {
+
+                    }
+                });
+
+
+            });
+
+            $('#ConfirmModificar').click(function () {
+                //alert("Levantar popup");
+                showAlertaConfirmar();
+            });
+        });
+
+
+        //$(document).ready(function () {
+        //    $("#btnUno").click(function () {
+        //        //$('#modalAlertaError').modal('show');
+        //        showAlertaAlert();
+        //        //$('#modalAlertaInformar').modal({ backdrop: true });
+        //        //$('#myModal').modal({
+        //        //    show: 'true'
+        //        //});
+        //        //alert("Holanda");
+        //    });
+        //});
     </script>
     <title>Edición Masiva de Inmuebles</title>
 </head>
@@ -106,7 +186,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-2" style="text-align:left">
-                                    <asp:TextBox ID="txtCantidad" style="text-align:right" runat="server" Width="215px"  CssClass="BordeRadio10" enabled="false"></asp:TextBox>
+                                    <asp:TextBox ID="txtCantidad" style="text-align:right" runat="server"  CssClass="BordeRadio10" enabled="false"></asp:TextBox>
                                 </div>
                                 <div class="col-md-2" style="text-align:right">
                                     <label for="Terraza"> <!--M2Terreno-->
@@ -114,7 +194,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-2" style="text-align:left">
-                                    <asp:TextBox ID="txtProyecto" style="text-align:right" runat="server" Width="215px"  CssClass="BordeRadio10" enabled="false"></asp:TextBox>
+                                    <asp:TextBox ID="txtProyecto" style="text-align:right" runat="server"  CssClass="BordeRadio10" enabled="false"></asp:TextBox>
                                 </div>
                                 <div class="col-md-2" style="text-align:right">
                                     <label for="M2 Terraza"> <!--M2Terreno-->
@@ -122,7 +202,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-2" style="text-align:left">
-                                    <asp:TextBox ID="txtM2Terraza" style="text-align:right" runat="server" Width="215px"  MaxLength="8" CssClass="BordeRadio10" onkeypress="return filterFloat(event,this);" autocomplete="off"></asp:TextBox>
+                                    <asp:TextBox ID="txtM2Terraza" style="text-align:right" runat="server"  MaxLength="8" CssClass="BordeRadio10" onkeypress="return filterFloat(event,this);" autocomplete="off"></asp:TextBox>
                                 </div>
                             </div>
                             </br>
@@ -133,7 +213,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-2" style="text-align:left">
-                                    <asp:TextBox ID="txtMetroUtil" style="text-align:right" runat="server" Width="215px" MaxLength="8" CssClass="BordeRadio10" onkeypress="return filterFloat(event,this);" autocomplete="off"></asp:TextBox>
+                                    <asp:TextBox ID="txtMetroUtil" style="text-align:right" runat="server"  MaxLength="8" CssClass="BordeRadio10" onkeypress="return filterFloat(event,this);" autocomplete="off"></asp:TextBox>
                                 </div>
                                 <div class="col-md-2" style="text-align:right">
                                     <label for="Precio Lista">  <!-- -->
@@ -151,7 +231,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-2">
-                                    <asp:TextBox ID="txtJustificacion" style="text-align:left" runat="server" Width="215px" MaxLength="50" CssClass="BordeRadio10" autocomplete="off"></asp:TextBox>
+                                    <asp:TextBox ID="txtJustificacion" style="text-align:left" runat="server"  MaxLength="50" CssClass="BordeRadio10" autocomplete="off"></asp:TextBox>
                                 </div>
                             </div>
      
@@ -161,14 +241,13 @@
                                    &nbsp;
                                     <asp:RadioButton ID="RdoPrecioLista2" runat="server" GroupName="PrecioLista" Text="Aumento %" />
                                    &nbsp;
-                                    <asp:RadioButton ID="RdoPrecioLista3" runat="server" GroupName="PrecioLista" Text="Aumento UF" />
-                                    &nbsp;
                                     <asp:RadioButton ID="RdoPrecioLista4" runat="server" GroupName="PrecioLista" Text="Disminuye %" />
+                                   &nbsp;
+                                    <asp:RadioButton ID="RdoPrecioLista3" runat="server" GroupName="PrecioLista" Text="Aumento UF" />    
                                    &nbsp;
                                     <asp:RadioButton ID="RdoPrecioLista5" runat="server" GroupName="PrecioLista" Text="Disminuye UF" />
                                 </div>
                                 <div class="col-md-7"> 
-                                    
                                 </div>
                             </div>
 
@@ -180,7 +259,7 @@
                                 </div>
                                 <div class="col-md-2" style="text-align:left">
                                     <asp:hiddenfield id="hddTipoPrecioLista" value="0" runat="server"/>
-                                    <asp:TextBox ID="txtPrecioLista" style="text-align:right" runat="server" Width="215px" MaxLength="4" CssClass="BordeRadio10" onkeypress="return isNumberKey(event)" autocomplete="off"></asp:TextBox>
+                                    <asp:TextBox ID="txtPrecioLista" style="text-align:right" runat="server"  MaxLength="4" CssClass="BordeRadio10" onkeypress="return isNumberKey(event)" autocomplete="off"></asp:TextBox>
                                 </div>
                                 <div class="col-md-2" style="text-align:right">
                                     <label for="Alicuota">  <!--Alicuota-->
@@ -188,7 +267,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-2" style="text-align:left">
-                                    <asp:TextBox ID="txtAlicuota" style="text-align:right" runat="server" Width="215px" MaxLength="50" CssClass="BordeRadio10" autocomplete="off"></asp:TextBox>
+                                    <asp:TextBox ID="txtAlicuota" style="text-align:right" runat="server" MaxLength="50" CssClass="BordeRadio10" autocomplete="off"></asp:TextBox>
                                 </div>
                                  <div class="col-md-2" style="text-align:right">
                                     <label for="Numero Rol">  <!--NumeroRol-->
@@ -196,19 +275,24 @@
                                     </label>
                                 </div>
                                 <div class="col-md-2" style="text-align:left">
-                                    <asp:TextBox ID="txtNumeroRol" style="text-align:right" runat="server" Width="215px" MaxLength="10" CssClass="BordeRadio10" autocomplete="off"></asp:TextBox>
+                                    <asp:TextBox ID="txtNumeroRol" style="text-align:right" runat="server"  MaxLength="10" CssClass="BordeRadio10" autocomplete="off"></asp:TextBox>
                                 </div>
                             </div>
                                
                             <br />
                             <div class="row">
-                                <span style="font-weight:bold;">
-                                    <ul>
-                                        <li>
-                                            Debe ingresar al menos un valor dentro de los campos para poder grabar.
-                                        </li>
-                                    </ul>
-                                </span>
+                                <div class="col-md-8" style="text-align:left">
+                                    <span style="font-weight:bold;">
+                                        <ul>
+                                            <li>
+                                                Debe ingresar al menos un valor dentro de los campos para poder grabar.
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </div>   
+                                <div class="col-md-4" style="text-align:right">
+                                    <asp:LinkButton ID="lnkPrevisualizaCambios" runat="server" CssClass="botoMaestra btn" Width="150" ToolTip="Modificar Inmueble" OnClick="lnkPrevisualizaCambios_Click">Previsualizar Cambios</asp:LinkButton>
+                                </div>     
                             </div>
                         </div>
 
@@ -233,14 +317,15 @@
                                 <AlternatingRowStyle CssClass="grid_linea_alterna" />
                                 <Columns>
                                     <asp:BoundField DataField="IdInmueble" HeaderText="Id Inmueble" ReadOnly="True" SortExpression="IdInmueble" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
-                                    <asp:BoundField DataField="Terraza" HeaderText="Terraza" ReadOnly="True" SortExpression="Terraza" HeaderStyle-Font-Underline="true" />
-                                    <asp:BoundField DataField="M2Util" HeaderText="M2 Util" ReadOnly="True" SortExpression="M2Util" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="TerrazaPrev" HeaderText="Terraza" ReadOnly="True" SortExpression="TerrazaPrev" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="M2UtilPrev" HeaderText="M2 Util" ReadOnly="True" SortExpression="M2UtilPrev" HeaderStyle-Font-Underline="true" />
                                     <asp:BoundField DataField="Piso" HeaderText="Piso" ReadOnly="True" SortExpression="Piso" HeaderStyle-Font-Underline="true" />
                                     <asp:BoundField DataField="PrecioLista" HeaderText="Precio Lista" ReadOnly="True" SortExpression="PrecioLista" HeaderStyle-Font-Underline="true" />
                                     <asp:BoundField DataField="EstadoInmueble" HeaderText="Estado" ReadOnly="True" SortExpression="EstadoInmueble" HeaderStyle-Font-Underline="true" />
                                     <asp:BoundField DataField="NumeroRol" HeaderText="Numero Rol" ReadOnly="True" SortExpression="NumeroRol" HeaderStyle-Font-Underline="true" />
                                     <asp:BoundField DataField="Alicuota" HeaderText="Alicuota" ReadOnly="True" SortExpression="Alicuota" HeaderStyle-Font-Underline="true" />
-                                    
+                                    <asp:BoundField DataField="JustificacionEstadoInmueble" HeaderText="Justificación" ReadOnly="True" SortExpression="JustificacionEstadoInmueble" HeaderStyle-Font-Underline="true" />
+
                                 </Columns>
                                 <FooterStyle CssClass="grid_footer" />
                                 <HeaderStyle CssClass="grid_header" />
@@ -272,6 +357,9 @@
                 </td>
                 <td align="right">
                     <asp:LinkButton ID="lnkConfirmModificar" runat="server" CssClass="botoMaestra btn" Width="150" ToolTip="Modificar Inmueble" OnClientClick="return window.confirm('Seguro que desea modificar los registros?')" OnClick="lnkConfirmModificar_Click">Modificar Inmueble</asp:LinkButton>
+                    <%--<asp:LinkButton ID="lnkConfirmModificar" runat="server" CssClass="botoMaestra btn" Width="150" ToolTip="Modificar Inmueble" OnClick="lnkConfirmModificar_Click">Modificar Inmueble</asp:LinkButton>
+                    <button type="button" id="ConfirmModificar" class="botoMaestra btn" data-dismiss="modal">Prueba Modificar</button>--%>
+                    
                 </td>
             </tr>
         </table>
@@ -340,6 +428,39 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="botoMaestra btn" data-dismiss="modal">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>   
+        <!-- FIN - Alerta Información-->
+
+        <!-- Alerta Confirmación-->
+        <div class="modal fade" id="modalAlertaConfirmar" tabindex="-1" role="dialog" aria-labelledby="exampleModalDetalle" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">    
+                    <div class="modal-header">                        
+						<asp:Label ID="Label1" runat="server" CssClass="info_modal"><span runat="server" class="oi oi-info"></span>&nbsp;&nbsp;Información</asp:Label>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+	                <div class="modal-body">
+                        <h6 style="margin-right:auto; margin-left:auto">
+							<asp:Label ID="lblAlertaMSGConfirmar" runat="server" Text=""></asp:Label>
+						</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <%--<button type="button" class="botoMaestra btn" data-dismiss="modal">Aceptar</button>--%>
+                        <%--<asp:Button ID="btnAceptarCambios" class="botoMaestra btn" data-dismiss="modal" runat="server" Text="Aceptar"/>--%>
+                        <button id="btnAceptarCambios" name="btnAceptarCambios" type="submit" class="botoMaestra btn">Aceptar</button>
+                        <%--<input type="button" id="btnUno" value="Boton" />--%>
+                        <%--<button id="btnUno" name="button" class="botoMaestra btn">Click me</button>--%>
+                        <%--<asp:LinkButton ID="btnUno" runat="server" CssClass="botoMaestra btn">
+                            Buscar <span class="oi oi-magnifying-glass"></span>
+                        </asp:LinkButton>--%>
+                        &nbsp;
+                        <%--<asp:Button ID="btnCancelarCambios" class="botoMaestra btn" data-dismiss="modal" runat="server" Text="Cancelar"/>--%>
+
                     </div>
                 </div>
             </div>

@@ -105,15 +105,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         protected global::System.Web.UI.WebControls.RadioButton RdoPrecioLista2;
 
         /// <summary>
-        /// Control RdoPrecioLista3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RdoPrecioLista3;
-
-        /// <summary>
         /// Control RdoPrecioLista4.
         /// </summary>
         /// <remarks>
@@ -121,6 +112,15 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton RdoPrecioLista4;
+
+        /// <summary>
+        /// Control RdoPrecioLista3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RdoPrecioLista3;
 
         /// <summary>
         /// Control RdoPrecioLista5.
@@ -166,6 +166,15 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNumeroRol;
+
+        /// <summary>
+        /// Control lnkPrevisualizaCambios.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkPrevisualizaCambios;
 
         /// <summary>
         /// Control lblLista.
@@ -256,5 +265,23 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblAlertaMSGInfo;
+
+        /// <summary>
+        /// Control Label1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+
+        /// <summary>
+        /// Control lblAlertaMSGConfirmar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAlertaMSGConfirmar;
     }
 }

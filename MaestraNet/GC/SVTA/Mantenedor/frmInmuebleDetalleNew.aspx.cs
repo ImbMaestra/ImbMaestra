@@ -136,12 +136,17 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 return false;
             }
 
-            if (txtEdificio.Text.Trim().Length < 1)
+            if (hddTipoInmueble.Value != "3")
             {
-                Alerta("Ingrese edificio", 4);
-                txtEdificio.Focus();
-                return false;
+                if (txtEdificio.Text.Trim().Length < 1)
+                {
+                    Alerta("Ingrese edificio", 4);
+                    txtEdificio.Focus();
+                    return false;
+                }
             }
+
+            
 
             double dSalida;
             if (!double.TryParse(txtLogia.Text == "" ? "0" : txtLogia.Text, out dSalida))
@@ -187,17 +192,31 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                  return false;
              }*/
 
+            if (hddTipoInmueble.Value != "3")
+            {
+                if (txtObservacion.Text.Trim().Length < 5)
+                {
+                    Alerta("Ingrese Observación", 4);
+                    txtObservacion.Focus();
+                    return false;
+                }
+            }
+
             //if (ddlModeloInmueble.SelectedValue != "31" && ddlModeloInmueble.SelectedValue != "8" && ddlModeloInmueble.SelectedValue != "5" && ddlModeloInmueble.SelectedValue != "4" && txtOrientacion.Text.Trim().Length < 3)
             //{
             //    Alerta("Ingrese orientación", 4);
             //    txtOrientacion.Focus();
             //    return false;
             //}
-            if (ddlModeloInmueble.SelectedValue != "31" && ddlModeloInmueble.SelectedValue != "8" && ddlModeloInmueble.SelectedValue != "5" && ddlModeloInmueble.SelectedValue != "4" && ddlOrientacion.SelectedValue == "0")
+
+            if (hddTipoInmueble.Value != "3")
             {
-                Alerta("Seleccione orientación", 4);
-                ddlOrientacion.Focus();
-                return false;
+                if (ddlModeloInmueble.SelectedValue != "31" && ddlModeloInmueble.SelectedValue != "8" && ddlModeloInmueble.SelectedValue != "5" && ddlModeloInmueble.SelectedValue != "4" && ddlOrientacion.SelectedValue == "0")
+                {
+                    Alerta("Seleccione orientación", 4);
+                    ddlOrientacion.Focus();
+                    return false;
+                }
             }
 
             if (!int.TryParse(txtPiso.Text, out iSalida))
@@ -286,6 +305,16 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 llenaDatosProyecto();
                 ListaAsociacionInmuebleRol();
 
+                int tipoInmueble = ConsultaInmuebleTipo(Convert.ToInt32(sIdInmueble));
+
+                if (tipoInmueble == 3) //3 - Bodega
+                {
+
+                }
+                else
+                {
+
+                }
                 //string[] datosBusqueda = Session["datosBusquedaInmueble"].ToString().Split(',');
             }
         }
@@ -312,9 +341,9 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             int idProyecto = Convert.ToInt32(datosBusqueda[0].ToString());
             //int idTipoInmueble = Convert.ToInt32(datosBusqueda[1].ToString());
             string Edificio = datosBusqueda[2].ToString();
-            int NDepto = Convert.ToInt32(datosBusqueda[3].ToString());
+            int NDepto = Convert.ToInt32(datosBusqueda[3].ToString() == "" ? "0" : datosBusqueda[3].ToString());
             //int IdModeloInmueble = Convert.ToInt32(datosBusqueda[4].ToString());
-            int Piso = Convert.ToInt32(datosBusqueda[5].ToString());
+            int Piso = Convert.ToInt32(datosBusqueda[5].ToString() == "" ? "0" : datosBusqueda[5].ToString());
             int IdOrientacion = Convert.ToInt32(datosBusqueda[6].ToString());
 
 
@@ -371,115 +400,11 @@ namespace MaestraNet.GC.SVTA.Mantenedor
 
         }
 
-        protected void gvInmuebles_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            ////-----se guarda el estado actual de los check de la página en curso.----------
-            //if (!CheckBoxAllCabecera)
-            //{
-            //    ProductsSelectionManager.KeepSelection((GridView)sender);
-            //}
-            ////---------------------------------------------------------------
-
-            //gvInmuebles.PageIndex = e.NewPageIndex;
-            //DataTable dt = (DataTable)ViewState["Inmueble"];
-            //dt.DefaultView.Sort = SortExpression + " " + this.SortDirection;
-
-            //gvInmuebles.DataSource = dt;
-
-            //gvInmuebles.DataBind();
-
-            //verificaEstadoCheckBoxAll();
-            //marcaDesmarcaCheckBoxAll();
-        }
-        protected void gvProducts_PageIndexChanged(object sender, EventArgs e)
-        {
-            //se restablece las marcas que pudiera haber para la misma.
-            //if (!CheckBoxAllCabecera)
-            //{
-            //    ProductsSelectionManager.RestoreSelection((GridView)sender);
-            //}
-        }
-
-        //Se ejecuta cada vez que se presiona un CheckBox dentro de la grilla
-        protected void checkListado_CheckedChanged(object sender, EventArgs e)
-        {
-            //var SelectListCheck = (List<int>)HttpContext.Current.Session["ProdSelection"] ?? new List<int>();
-            ////--Si está seleccionado el CheckBox de cabecera, hay que verificar si se está
-            ////marcando o desmarcando un 
-            //if (CheckBoxAllCabecera)
-            //{
-            //    //Hay que cambiar el estado de la variable checkBoxAll de la cabecera
-            //    cambiaEstadoVariableCheckBoxAll();
-            //    //Hay que marcar o desmarcar el checkBox de la cabecera comparando las listas
-            //    verificaEstadoCheckBoxAll();
-
-            //    //Hay que conservar la lista total y quitar el item desmarcado
-            //    foreach (GridViewRow row in gvInmuebles.Rows)
-            //    {
-            //        CheckBox chckrw = (CheckBox)row.FindControl("ChkEdicion");
-            //        int valor = Convert.ToInt32(gvInmuebles.Rows[row.RowIndex].Cells[1].Text);
-            //        if (chckrw.Checked && !SelectListCheck.Contains(valor))
-            //        {
-            //            //int valor = Convert.ToInt32(gvInmuebles.Rows[row.RowIndex].Cells[1].Text);
-            //            SelectListCheck.Add(valor);
-            //        }
-            //        else if (!chckrw.Checked && SelectListCheck.Contains(valor))
-            //        {
-            //            //int valor = Convert.ToInt32(gvInmuebles.Rows[row.RowIndex].Cells[1].Text);
-            //            SelectListCheck.RemoveAll(s => s == valor);
-            //        }
-            //    }
-
-            //}
-            //else
-            //{
-            //    //Hay que conservar la lista total y quitar el item desmarcado
-            //    foreach (GridViewRow row in gvInmuebles.Rows)
-            //    {
-            //        CheckBox chckrw = (CheckBox)row.FindControl("ChkEdicion");
-            //        int valor = Convert.ToInt32(gvInmuebles.Rows[row.RowIndex].Cells[1].Text);
-            //        if (chckrw.Checked && !SelectListCheck.Contains(valor))
-            //        {
-            //            //int valor = Convert.ToInt32(gvInmuebles.Rows[row.RowIndex].Cells[1].Text);
-            //            SelectListCheck.Add(valor);
-            //        }
-            //        else if (!chckrw.Checked && SelectListCheck.Contains(valor))
-            //        {
-            //            //int valor = Convert.ToInt32(gvInmuebles.Rows[row.RowIndex].Cells[1].Text);
-            //            SelectListCheck.RemoveAll(s => s == valor);
-            //        }
-            //    }
-
-            //    HttpContext.Current.Session["ProdSelection"] = SelectListCheck;
-
-            //    //Hay que marcar o desmarcar el checkBox de la cabecera comparando las listas
-            //    DataTable dt = (DataTable)ViewState["Inmueble"];
-            //    int totalRows = dt.Rows.Count;
-            //    if (totalRows == SelectListCheck.Count)
-            //    {
-            //        cambiaEstadoVariableCheckBoxAll();
-            //        verificaEstadoCheckBoxAll();
-            //    }
-            //    else if (SelectListCheck.Count == 0)
-            //    {
-            //        LimpiaListaSeleccion();
-            //    }
-            //}
-
-            ////-----se guarda el estado actual de los check de la pagina en curso.----------
-            //if (!CheckBoxAllCabecera)
-            //{
-            //    //ProductsSelectionManager.KeepSelection((GridView)sender);
-            //    ProductsSelectionManager.KeepSelection(gvInmuebles);
-            //}
-            //---------------------------------------------------------------
-        }
-
         protected void btnAsociar_Click(object sender, EventArgs e)
         {
             BLInmueble oInmueble = new BLInmueble();
             Inmueble inm = new Inmueble();
-            int iIdProyecto;
+            //int iIdProyecto;
             GridViewRow gvrow = (GridViewRow)(((LinkButton)sender)).NamingContainer;
             //TextBox txtPack = gvInmuebles.FindControl("txtInmueblePack") as TextBox;
             HiddenField theHiddenField = gvrow.FindControl("HiddenFieldDifferentUsers") as HiddenField;
@@ -558,39 +483,10 @@ namespace MaestraNet.GC.SVTA.Mantenedor
 
         }
 
-        protected void gvAsociadoRol_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            ////-----se guarda el estado actual de los check de la página en curso.----------
-            //if (!CheckBoxAllCabecera)
-            //{
-            //    ProductsSelectionManager.KeepSelection((GridView)sender);
-            //}
-            ////---------------------------------------------------------------
-
-            //gvInmuebles.PageIndex = e.NewPageIndex;
-            //DataTable dt = (DataTable)ViewState["Inmueble"];
-            //dt.DefaultView.Sort = SortExpression + " " + this.SortDirection;
-
-            //gvInmuebles.DataSource = dt;
-
-            //gvInmuebles.DataBind();
-
-            //verificaEstadoCheckBoxAll();
-            //marcaDesmarcaCheckBoxAll();
-        }
-        protected void gvAsociadoRol_PageIndexChanged(object sender, EventArgs e)
-        {
-            //se restablece las marcas que pudiera haber para la misma.
-            //if (!CheckBoxAllCabecera)
-            //{
-            //    ProductsSelectionManager.RestoreSelection((GridView)sender);
-            //}
-        }
-
         protected void btnEliminarInmueble_Click(object sender, EventArgs e)
         {
            BLInmueble oInmueble = new BLInmueble();
-            Inmueble inm = new Inmueble();
+            //Inmueble inm = new Inmueble();
             //int iIdProyecto;
             GridViewRow gvrow = (GridViewRow)(((LinkButton)sender)).NamingContainer;
             HiddenField theHiddenField = gvrow.FindControl("HiddenFieldDifferentUsers") as HiddenField;
@@ -613,6 +509,25 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 Alerta(ex.Message, 1);
                 return;
             }
+        }
+
+        private int ConsultaInmuebleTipo(int idInmueble)
+        {
+            BLInmueble oInmueble = new BLInmueble();
+            DataSet dsInmueble;
+            DataTable dt;
+            dsInmueble = oInmueble.ConsultaInmuebleTipo(idInmueble);
+
+            int tipoInmueble = 0;
+            dt = dsInmueble.Tables[0];
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                tipoInmueble = Convert.ToInt32(dt.Rows[i]["IdTipoInmueble"].ToString()); //3 - Bodega
+            }
+            hddTipoInmueble.Value = tipoInmueble.ToString();
+
+            return tipoInmueble;
         }
     }
 }

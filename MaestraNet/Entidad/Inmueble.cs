@@ -51,6 +51,15 @@ namespace MaestraNet.Entidad
         { get; set; }
 
 
+        //Para la previsualización en grilla y no mostrar valores
+        public string TerrazaPrev
+        { get; set; }
+        public string M2UtilPrev
+        { get; set; }
+
+
+
+
         //Para tipo Inmueble, consultar si se dejarán los atributos en otra clase
         public int IdTipoInmueble
         { get; set; }

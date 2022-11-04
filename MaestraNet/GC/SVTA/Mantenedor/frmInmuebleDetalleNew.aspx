@@ -48,6 +48,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-3">
+                                    <asp:HiddenField ID="hddTipoInmueble" Value='' runat="server" />
                                     <label for="ModeloInmueble">
                                         Modelo: &nbsp;
                                         <asp:DropDownList ID="ddlModeloInmueble" runat="server" DataSourceID="sdsModeloInmueble" CssClass="BordeRadio10" BackColor="Yellow" DataValueField="IdModeloInmueble" DataTextField="Nombre">
@@ -279,17 +280,9 @@
                                     <asp:GridView ID="gvInmuebles" runat="server" CellPadding="4" AutoGenerateColumns="False"
                                             DataKeyNames="IdInmueble"
                                             OnDataBound="gvInmuebles_DataBound" OnRowDataBound="gvInmuebles_RowDataBound"
-                                            AllowPaging="True" AllowSorting="True" OnPageIndexChanging="gvInmuebles_PageIndexChanging" onpageindexchanged="gvProducts_PageIndexChanged" CssClass="grid_data" PageSize="5">
+                                            AllowPaging="True" AllowSorting="True"  CssClass="grid_data" PageSize="5">
                                         <AlternatingRowStyle CssClass="grid_linea_alterna" />
                                         <Columns>
-    <%--                                        <asp:templatefield>
-                                                <HeaderTemplate>
-                                                  <asp:CheckBox ID="checkAll" runat="server" OnCheckedChanged="checkTodos_CheckedChanged"  AutoPostBack="true"/>
-                                                </HeaderTemplate> 
-				                                <itemtemplate>
-					                                <asp:checkbox id="ChkEdicion" runat="server" OnCheckedChanged="checkListado_CheckedChanged" AutoPostBack="true" />
-				                                </itemtemplate>
-			                                </asp:templatefield>--%>
                                             <asp:BoundField DataField="IdInmueble" HeaderText="Id Inmueble" ReadOnly="True" SortExpression="IdInmueble" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
                                             <asp:BoundField DataField="Descripcion" HeaderText="Descripción" ReadOnly="True" SortExpression="Descripcion" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
                                             <asp:BoundField DataField="Edificio" HeaderText="Edificio" ReadOnly="True" SortExpression="Edificio" HeaderStyle-Font-Underline="true" />
@@ -327,7 +320,7 @@
                                     <asp:GridView ID="gvAsociadoRol" runat="server" CellPadding="4" AutoGenerateColumns="False"
                                             DataKeyNames="IdInmuebleA"
                                             OnDataBound="gvAsociadoRol_DataBound" OnRowDataBound="gvAsociadoRol_RowDataBound"
-                                            AllowPaging="True" AllowSorting="True" OnPageIndexChanging="gvAsociadoRol_PageIndexChanging" onpageindexchanged="gvAsociadoRol_PageIndexChanged" CssClass="grid_data" PageSize="5">
+                                            AllowPaging="True" AllowSorting="True" CssClass="grid_data" PageSize="5">
                                         <AlternatingRowStyle CssClass="grid_linea_alterna" />
                                         <Columns>
                                             <asp:BoundField DataField="NumeroRolA" HeaderText="Rol" ReadOnly="True" SortExpression="NumeroRolA" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
@@ -338,6 +331,7 @@
                                             <%--<asp:BoundField DataField="M2" HeaderText="M2 Util" ReadOnly="True" SortExpression="M2" HeaderStyle-Font-Underline="true" />--%>
                                             <%--<asp:BoundField DataField="Numero" HeaderText="Numero" ReadOnly="True" SortExpression="Numero" HeaderStyle-Font-Underline="true" />--%>
                                             <asp:BoundField DataField="Estado" HeaderText="Estado" ReadOnly="True" SortExpression="Estado" HeaderStyle-Font-Underline="true" />
+                                            <asp:BoundField DataField="TipoInmueble" HeaderText="Tipo" ReadOnly="True" SortExpression="TipoInmueble" HeaderStyle-Font-Underline="true" />
                                             <asp:TemplateField HeaderText="Eliminar" ItemStyle-HorizontalAlign="Center">
                                                 <ItemTemplate>
                                                     <asp:LinkButton ID="btnEliminarAsociacion" CssClass="btn grid_boton" runat="server" Text="Eliminar" OnClick="btnEliminarInmueble_Click" ForeColor="#ffffff" ToolTip="Eliminar Inmueble"> <i class="oi oi-trash"></i>

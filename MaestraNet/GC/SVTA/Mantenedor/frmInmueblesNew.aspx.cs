@@ -95,6 +95,35 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 HttpContext.Current.Session["ProdSelection"] = null;
                 string funcionJS = "$('#GrillaInmueble').hide();";
                 ScriptManager.RegisterStartupScript(this, GetType(), "ModalLib", funcionJS, true);
+
+                if (Session["datosBusquedaInmueble"] != null)
+                {
+                    DataSet dsInmueble;
+                    BLInmueble oInmueble = new BLInmueble();
+                    Funciones oFunciones = new Funciones();
+                    string[] datosBusqueda = Session["datosBusquedaInmueble"].ToString().Split(',');
+
+                    ddlProyecto.SelectedValue = datosBusqueda[0];
+                    llenaTorres(Convert.ToInt32(datosBusqueda[0]));
+                    ddlTorre.SelectedValue = datosBusqueda[2];
+                    ddlTipoInmueble.SelectedValue = datosBusqueda[1];
+                    ddlModeloInmueble.SelectedValue = datosBusqueda[4];
+                    txtDepto.Text = datosBusqueda[3];
+                    txtPiso.Text = datosBusqueda[5];
+                    ddlOrientacion.SelectedValue = datosBusqueda[6];
+
+                    //dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(datosBusqueda[0]), Convert.ToInt32(datosBusqueda[1]), datosBusqueda[2], Convert.ToInt32(datosBusqueda[3]), Convert.ToInt32(datosBusqueda[4]), Convert.ToInt32(datosBusqueda[5]), Convert.ToInt32(datosBusqueda[6]));
+                    //dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), iPiso, Convert.ToInt32(ddlOrientacion.SelectedValue));
+                    //ViewState["Inmueble"] = dsInmueble.Tables[0];
+
+                    //SortExpression = "Descripcion";
+
+                    // if (dsInmueble.Tables[0].Rows.Count > 0)
+                    //{
+
+                    //gvInmuebles.DataSource = oFunciones.BindGrid((DataTable)ViewState["Inmueble"], SortDirection, SortExpression);
+                    //gvInmuebles.DataBind();
+                }
             }
         }
 
@@ -125,9 +154,9 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 Session["datosBusquedaInmueble"] = ddlProyecto.SelectedValue + "," +
                                     ddlTipoInmueble.SelectedValue + "," +
                                     ddlTorre.SelectedValue + "," +
-                                    ndepto + "," +
+                                    txtDepto.Text.Trim() + "," +
                                     ddlModeloInmueble.SelectedValue + "," +
-                                    Convert.ToString(iPiso) + "," +
+                                    txtPiso.Text.Trim() + "," +
                                     ddlOrientacion.SelectedValue;
 
                 dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), iPiso, Convert.ToInt32(ddlOrientacion.SelectedValue));
@@ -641,8 +670,11 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                             Inmueble list3 = new Inmueble();
                             list3.IdInmueble = Convert.ToInt32(dt.Rows[i]["IdInmueble"].ToString());
                             list3.IdEstadoInmueble = Convert.ToInt32(dt.Rows[i]["IdEstado"]);
-                            list3.Terraza = Convert.ToInt32(dt.Rows[i]["M2Terreno"]);
-                            list3.M2Util = Convert.ToInt32(dt.Rows[i]["M2"]);
+                            //list3.Terraza = Convert.ToDouble(dt.Rows[i]["M2Terreno"]);
+                            //list3.M2Util = Convert.ToDouble(dt.Rows[i]["M2"]);
+                            list3.TerrazaPrev = dt.Rows[i]["M2Terreno"].ToString();
+                            list3.M2UtilPrev = dt.Rows[i]["M2"].ToString();
+                            list3.Piso = Convert.ToInt32(dt.Rows[i]["Piso"].ToString());
                             list3.EstadoInmueble = dt.Rows[i]["Estado"].ToString();
                             list3.JustificacionEstadoInmueble = dt.Rows[i]["JustificacionEstadoInmueble"].ToString();
                             list3.PrecioLista = Convert.ToInt32(dt.Rows[i]["PrecioLista"]);
