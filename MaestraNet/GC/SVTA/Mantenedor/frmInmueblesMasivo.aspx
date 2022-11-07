@@ -310,7 +310,7 @@
                             </legend>
                             <asp:GridView ID="gvDatosActuales" runat="server" CellPadding="4" AutoGenerateColumns="False"
                                     DataKeyNames="IdInmueble" 
-                                    AllowPaging="True" AllowSorting="false" OnPageIndexChanging="gvDatosActuales_PageIndexChanging" CssClass="grid_data" PageSize="2">
+                                    AllowPaging="True" AllowSorting="false" OnPageIndexChanging="gvDatosActuales_PageIndexChanging" CssClass="grid_data" PageSize="20">
                                 <AlternatingRowStyle CssClass="grid_linea_alterna" />
                                 <Columns>
                                     <asp:BoundField DataField="IdInmueble" HeaderText="Id Inmueble" ReadOnly="True" SortExpression="IdInmueble" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
@@ -322,6 +322,9 @@
                                     <asp:BoundField DataField="NumeroRol" HeaderText="Numero Rol" ReadOnly="True" SortExpression="NumeroRol" HeaderStyle-Font-Underline="true" />
                                     <asp:BoundField DataField="Alicuota" HeaderText="Alicuota" ReadOnly="True" SortExpression="Alicuota" HeaderStyle-Font-Underline="true" />
                                     <asp:BoundField DataField="JustificacionEstadoInmueble" HeaderText="Justificación" ReadOnly="True" SortExpression="JustificacionEstadoInmueble" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="NDepto" HeaderText="Numero" ReadOnly="True" SortExpression="NDepto" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="ModeloInmueble" HeaderText="Modelo Inmueble" ReadOnly="True" SortExpression="ModeloInmueble" HeaderStyle-Font-Underline="true" />
+
 
                                 </Columns>
                                 <FooterStyle CssClass="grid_footer" />
@@ -351,7 +354,7 @@
 
                             <asp:GridView ID="gvInmueblesVista" runat="server" CellPadding="4" AutoGenerateColumns="False"
                                     DataKeyNames="IdInmueble" 
-                                    AllowPaging="True" AllowSorting="false" OnPageIndexChanging="gvInmueblesVista_PageIndexChanging" CssClass="grid_data" PageSize="2">
+                                    AllowPaging="True" AllowSorting="false" OnPageIndexChanging="gvInmueblesVista_PageIndexChanging" CssClass="grid_data" PageSize="20">
                                 <AlternatingRowStyle CssClass="grid_linea_alterna" />
                                 <Columns>
                                     <asp:BoundField DataField="IdInmueble" HeaderText="Id Inmueble" ReadOnly="True" SortExpression="IdInmueble" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
@@ -363,6 +366,8 @@
                                     <asp:BoundField DataField="NumeroRol" HeaderText="Numero Rol" ReadOnly="True" SortExpression="NumeroRol" HeaderStyle-Font-Underline="true" />
                                     <asp:BoundField DataField="Alicuota" HeaderText="Alicuota" ReadOnly="True" SortExpression="Alicuota" HeaderStyle-Font-Underline="true" />
                                     <asp:BoundField DataField="JustificacionEstadoInmueble" HeaderText="Justificación" ReadOnly="True" SortExpression="JustificacionEstadoInmueble" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="NDepto" HeaderText="Numero" ReadOnly="True" SortExpression="NDepto" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="ModeloInmueble" HeaderText="Modelo Inmueble" ReadOnly="True" SortExpression="ModeloInmueble" HeaderStyle-Font-Underline="true" />
 
                                 </Columns>
                                 <FooterStyle CssClass="grid_footer" />

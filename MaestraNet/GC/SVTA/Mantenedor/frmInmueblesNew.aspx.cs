@@ -680,6 +680,9 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                         list3.PrecioLista = Convert.ToInt32(dt.Rows[i]["PrecioLista"]);
                         list3.NumeroRol = dt.Rows[i]["NumeroRol"].ToString();
                         list3.Alicuota = dt.Rows[i]["Alicuota"].ToString();
+                        list3.NDepto = Convert.ToInt32(dt.Rows[i]["Numero"].ToString());
+                        list3.ModeloInmueble = dt.Rows[i]["modeloInmueble"].ToString();
+
                         list2.Add(list3);
                     }
                 }

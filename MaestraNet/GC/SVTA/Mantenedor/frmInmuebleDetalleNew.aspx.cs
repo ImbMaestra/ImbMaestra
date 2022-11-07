@@ -110,7 +110,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 }
                 else
                 {
-                    ddlOrientacion.SelectedValue = "0.";
+                    ddlOrientacion.SelectedValue = "0";
                 }
 
                 txtPrecioLista.Text = dtInmueble.Rows[0]["PrecioLista"].ToString();

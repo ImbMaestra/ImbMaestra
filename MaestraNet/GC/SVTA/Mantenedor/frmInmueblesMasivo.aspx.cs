@@ -285,13 +285,16 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             {
                 txtPrecioLista.Enabled = false;
                 txtPrecioLista.Text = "";
-                Alerta("Uno de los estados es distinto a Disponible y Bloqueado, no es posible grabar", 4);
-                lnkConfirmModificar.Visible = false;
+                Alerta("Uno de los estados es distinto a Disponible y Bloqueado, no es posible grabar el Precio de Lista", 4);
+                //lnkConfirmModificar.Visible = false;
+                RdoPrecioLista1.Checked = true;
+                ddlEstadoInmueble.Enabled = false;
             }
             else
             {
                 txtPrecioLista.Enabled = true;
-                lnkConfirmModificar.Visible = true;
+                ddlEstadoInmueble.Enabled = true;
+                //lnkConfirmModificar.Visible = true;
             }
         }
 
@@ -359,6 +362,9 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                         list1[i].Alicuota = txtAlicuota.Text.Trim() == "" ? dt.Rows[i]["Alicuota"].ToString() : txtAlicuota.Text.Trim();
                         list1[i].NumeroRol = txtNumeroRol.Text.Trim() == "" ? dt.Rows[i]["NumeroRol"].ToString() : txtNumeroRol.Text.Trim();
                         list1[i].Usuario = Session["IdUsuario"].ToString();
+                        list1[i].NDepto = Convert.ToInt32(dt.Rows[i]["NDepto"].ToString());
+                        list1[i].ModeloInmueble = dt.Rows[i]["ModeloInmueble"].ToString();
+
                     }
 
                     gvInmueblesVista.DataSource = list1;
@@ -381,19 +387,22 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         {
             int valorAplicar = Convert.ToInt32(txtPrecioLista.Text);
 
+            Decimal NewValor = 0;
             switch (tipoPrecioLista)
             {
                 case 0: //Total igual para todos
                     precioLista = Convert.ToInt32(txtPrecioLista.Text);
                     break;
                 case 1: //Aumento %
-                    precioLista = ((precioLista * valorAplicar) / 100) + precioLista;
+                    NewValor = Convert.ToDecimal(Convert.ToDouble(precioLista * valorAplicar) / 100);
+                    precioLista = Convert.ToInt32(NewValor) + precioLista;
                     break;
                 case 2: //Aumento UF
                     precioLista = precioLista + valorAplicar;
                     break;
                 case 3: //Disminuye %
-                    precioLista = precioLista - ((precioLista * valorAplicar) / 100);
+                    NewValor = Convert.ToDecimal(Convert.ToDouble(precioLista * valorAplicar) / 100);
+                    precioLista = precioLista - Convert.ToInt32((NewValor));
                     break;
                 case 4: //Disminuye UF
                     precioLista = precioLista - valorAplicar;
