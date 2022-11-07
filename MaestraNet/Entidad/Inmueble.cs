@@ -13,6 +13,8 @@ namespace MaestraNet.Entidad
         { get; set; }
         public int IdModeloInmueble
         { get; set; }
+        public string ModeloInmueble
+        { get; set; }
         public int Piso
         { get; set; }
         public string Edificio
