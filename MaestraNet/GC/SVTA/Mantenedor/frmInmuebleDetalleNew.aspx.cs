@@ -305,16 +305,8 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 llenaDatosProyecto();
                 ListaAsociacionInmuebleRol();
 
-                int tipoInmueble = ConsultaInmuebleTipo(Convert.ToInt32(sIdInmueble));
+                ConsultaInmuebleTipo(Convert.ToInt32(sIdInmueble));
 
-                if (tipoInmueble == 3) //3 - Bodega
-                {
-
-                }
-                else
-                {
-
-                }
             }
         }
 
