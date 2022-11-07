@@ -256,6 +256,49 @@ namespace MaestraNet.Data
             SqlCommand cmdInmueble = new SqlCommand();
 
 
+            cmdInmueble.CommandText = "sp_VTA_ModificaInmueble";
+
+            cmdInmueble.CommandType = CommandType.StoredProcedure;
+
+            cmdInmueble.Connection = oConnection;
+
+            cmdInmueble.Parameters.Add("@IdProyecto", SqlDbType.Int).Value = oInmueble.IdProyecto;
+            cmdInmueble.Parameters.Add("@IdInmueble", SqlDbType.Int).Value = oInmueble.IdInmueble;
+            cmdInmueble.Parameters.Add("@IdModeloInmueble", SqlDbType.Int).Value = oInmueble.IdModeloInmueble;
+            cmdInmueble.Parameters.Add("@Piso", SqlDbType.Int).Value = oInmueble.Piso;
+            cmdInmueble.Parameters.Add("@Edificio", SqlDbType.VarChar, 15).Value = oInmueble.Edificio;
+            cmdInmueble.Parameters.Add("@Observacion", SqlDbType.VarChar, 50).Value = oInmueble.Observacion;
+            cmdInmueble.Parameters.Add("@numero", SqlDbType.Int).Value = oInmueble.NDepto;
+            cmdInmueble.Parameters.Add("@m2terreno", SqlDbType.Float).Value = oInmueble.Terraza;
+            cmdInmueble.Parameters.Add("@m2", SqlDbType.Float).Value = oInmueble.M2Util;
+            cmdInmueble.Parameters.Add("@orientacion", SqlDbType.VarChar, 50).Value = oInmueble.Orientacion;
+            cmdInmueble.Parameters.Add("@preciolista", SqlDbType.Int).Value = oInmueble.PrecioLista;
+            cmdInmueble.Parameters.Add("@estadoinmueble", SqlDbType.Int).Value = oInmueble.IdEstadoInmueble;
+            cmdInmueble.Parameters.Add("@logia", SqlDbType.Float).Value = oInmueble.Logia;
+            cmdInmueble.Parameters.Add("@usuario", SqlDbType.VarChar, 30).Value = oInmueble.Usuario;
+
+            try
+            {
+                oConnection.Open();
+                cmdInmueble.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                oConnection.Close();
+            }
+        }
+
+        public void ModificarInmueble2(Inmueble oInmueble)
+        {
+            SqlConnection oConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["Sistemas_Maestra"].ConnectionString);
+            SqlCommand cmdInmueble = new SqlCommand();
+
+
             cmdInmueble.CommandText = "sp_VTA_ModificaInmueble2";
 
             cmdInmueble.CommandType = CommandType.StoredProcedure;
@@ -277,8 +320,8 @@ namespace MaestraNet.Data
             cmdInmueble.Parameters.Add("@estadoinmueble", SqlDbType.Int).Value = oInmueble.IdEstadoInmueble;
             cmdInmueble.Parameters.Add("@logia", SqlDbType.Float).Value = oInmueble.Logia;
             cmdInmueble.Parameters.Add("@usuario", SqlDbType.VarChar, 30).Value = oInmueble.Usuario;
-            cmdInmueble.Parameters.Add("@Alicuota", SqlDbType.Float).Value = oInmueble.Alicuota;
-            cmdInmueble.Parameters.Add("@NumeroRol", SqlDbType.VarChar, 30).Value = oInmueble.NumeroRol;
+            cmdInmueble.Parameters.Add("@Alicuota", SqlDbType.VarChar).Value = oInmueble.Alicuota;
+            cmdInmueble.Parameters.Add("@NumeroRol", SqlDbType.VarChar, 10).Value = oInmueble.NumeroRol;
 
             try
             {

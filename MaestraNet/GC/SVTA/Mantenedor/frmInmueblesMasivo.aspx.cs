@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using System.Web.Services;
 
 using System.Web.Script.Services;
+using System.ComponentModel;
 
 namespace MaestraNet.GC.SVTA.Mantenedor
 {
@@ -127,17 +128,10 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 return;
             }
 
-            //if (!cmdSgte_Click())
-            //    return;
+            if (!cmdSgte_Click())
+                return;
 
             ValidaTipoPrecioLista();
-
-            //GrabarInmueble();
-
-            //Alerta("Datos guardados de forma exitosa.", 3);
-            //LimpiarCampos();
-            //HabilitarJustificacion();
-
             CargaNuevosValoresEnGrilla();
         }
 
@@ -166,8 +160,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         {
             BLInmueble blInmueble = new BLInmueble();
             Inmueble oInmueble = new Inmueble();
-            //cs.dbTools db = new cs.dbTools();
-            //lblUsuario.Text = db.Nombre_Usuario(Session["IdUsuario"].ToString());
 
             try
             {
@@ -207,6 +199,9 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             txtJustificacion.Text = "";
             txtAlicuota.Text = "";
             txtNumeroRol.Text = "";
+
+            gvInmueblesVista.DataSource = null;
+            gvInmueblesVista.DataBind();
         }
 
         private void ValidaTipoPrecioLista()
@@ -252,7 +247,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             }
             else if(ddlEstadoInmueble.SelectedValue == "-1")
             {
-                //Por defecto debe estar habilitado el campo PrecioLista si el estado es Disponible
+                //Por defecto debe estar habilitado el campo PrecioLista si el estado es Disponible o Bloqueado
                 //Recorrer la lista y verificar si todos los inmuebles están en estado Disponible
                 verificaEstadosInmueble();
             }   
@@ -261,13 +256,14 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         private void verificaEstadosInmueble()
         {
             int valida = 0;
-            if (Session["ListadoInmuebles"] != null)
-            {
-                List<Inmueble> list1 = (List<Inmueble>)Session["ListadoInmuebles"];
 
-                foreach (var item in list1)
+            //Nuevo metodo
+            if (Session["DatosSeleccionados"] != null)
+            {
+                DataTable dt = (DataTable)Session["DatosSeleccionados"];
+                for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    if (item.IdEstadoInmueble == 0 || item.IdEstadoInmueble == 6) //0-Estado Disponible / 6-Bloqueado
+                    if (Convert.ToInt32(dt.Rows[i]["IdEstadoInmueble"]) == 0 || Convert.ToInt32(dt.Rows[i]["IdEstadoInmueble"]) == 6) //0-Estado Disponible / 6-Bloqueado
                     {
                         valida = 0;
                     }
@@ -275,11 +271,11 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                     {
                         valida = 1;
                         break;
-                    }  
+                    }
                 }
 
                 //Cuando se seleccione sólo un elemento, dejará modificar
-                if (list1.Count == 1)
+                if (dt.Rows.Count == 1)
                 {
                     valida = 0;
                 }
@@ -318,190 +314,66 @@ namespace MaestraNet.GC.SVTA.Mantenedor
 
         private void cargaGrillaActual()
         {
-            if (Session["ListadoInmuebles"] != null)
+            if (Session["DatosSeleccionados"] != null)
             {
-                gvInmueblesVista.DataSource = (List<Inmueble>)Session["ListadoInmuebles"];
-                gvInmueblesVista.DataBind();
+                DataTable dt = (DataTable)Session["DatosSeleccionados"];
+                ViewState["ListadoGrillaActual"] = dt;
+                gvDatosActuales.DataSource = dt;
+                gvDatosActuales.DataBind();
             }
         }
 
-        protected void gvInmueblesVista_DataBound(object sender, EventArgs e)
+        protected void gvDatosActuales_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            //int sortedColumnPosition = 0;
-            //LinkButton lnkbtn;
-            //CheckBox chklnk;
-            //string hex = "#E9E7E2";
-            //System.Drawing.Color _color;
-
-            //if (gvInmuebles.HeaderRow == null)
-            //    return;
-            //foreach (TableCell cell in gvInmuebles.HeaderRow.Cells)
-            //{
-            //    if (cell.Controls.Count > 0)
-            //    {
-            //        if (cell.Controls.Count == 3)
-            //        {
-            //            chklnk = cell.Controls[1] as CheckBox;
-            //        }
-            //        else
-            //        {
-            //            lnkbtn = (LinkButton)cell.Controls[0];
-            //            if (lnkbtn.CommandArgument == SortExpression)
-            //            {
-            //                break;
-            //            }
-            //        }
-
-            //    }
-            //    sortedColumnPosition++;
-            //}
-            //if (!string.IsNullOrEmpty(SortExpression))
-            //{
-            //    foreach (GridViewRow row in gvInmuebles.Rows)
-            //    {
-            //        if (sortedColumnPosition < 16)
-            //        {
-            //            _color = System.Drawing.ColorTranslator.FromHtml(hex);
-            //            row.Cells[sortedColumnPosition].BackColor = _color;
-            //        }
-            //    }
-            //}
-        }
-
-        protected void gvInmueblesVista_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            //Pasa por aquí cada vez que carga una fila en la grilla
-            //string hex = "#B13261";
-            //System.Drawing.Color _color;
-            //LinkButton lnkbtn;
-            //CheckBox chklnk;
-            //if (e.Row.RowType == DataControlRowType.Header)
-            //{
-            //    foreach (TableCell cell in e.Row.Cells)
-            //    {
-            //        if (cell.Controls.Count > 0)
-            //        {
-            //            if (cell.Controls.Count == 3)
-            //            {
-            //                //var a = cell.Controls[2].Controls.GetType();
-            //                chklnk = cell.Controls[1] as CheckBox;
-            //            }
-            //            else
-            //            {
-            //                lnkbtn = cell.Controls[0] as LinkButton;
-            //                if (!string.IsNullOrEmpty(lnkbtn.CommandArgument))
-            //                {
-            //                    if (lnkbtn.CommandArgument == SortExpression)
-            //                    {
-            //                        _color = System.Drawing.ColorTranslator.FromHtml(hex);
-            //                        cell.BackColor = _color;
-            //                        lnkbtn.BackColor = _color;
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+            gvDatosActuales.PageIndex = e.NewPageIndex;
+            gvDatosActuales.DataSource = (DataTable)ViewState["ListadoGrillaActual"];
+            gvDatosActuales.DataBind(); 
         }
 
         protected void gvInmueblesVista_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            ////-----se guarda el estado actual de los check de la página en curso.----------
-            //if (!CheckBoxAllCabecera)
-            //{
-            //    ProductsSelectionManager.KeepSelection((GridView)sender);
-            //}
-            ////---------------------------------------------------------------
-
-            //gvInmuebles.PageIndex = e.NewPageIndex;
-            //DataTable dt = (DataTable)ViewState["Inmueble"];
-            //dt.DefaultView.Sort = SortExpression + " " + this.SortDirection;
-
-            //gvInmuebles.DataSource = dt;
-
-            //gvInmuebles.DataBind();
-
-            //verificaEstadoCheckBoxAll();
-            //marcaDesmarcaCheckBoxAll();
+            gvInmueblesVista.PageIndex = e.NewPageIndex;
+            CargaNuevosValoresEnGrilla();
         }
-
-        protected void gvProducts_PageIndexChanged(object sender, EventArgs e)
-        {
-            //se restablece las marcas que pudiera haber para la misma.
-            //if (!CheckBoxAllCabecera)
-            //{
-            //    ProductsSelectionManager.RestoreSelection((GridView)sender);
-            //}
-        }
-
-        //protected void gvInmueblesVista_Sorting(object sender, GridViewSortEventArgs e)
-        //{
-        //    //Pasa por aquí al hacer click en los títulos
-        //    ////-----se guarda el estado actual de los check de la página en curso.----------
-        //    //if (!CheckBoxAllCabecera)
-        //    //{
-        //    //    ProductsSelectionManager.KeepSelection((GridView)sender);
-        //    //}
-        //    ////---------------------------------------------------------------
-        //    Funciones ofunciones = new Funciones();
-        //    DataTable dtOrden = new DataTable();
-
-        //    SortExpression = e.SortExpression;
-        //    SortDirection = SortDirection == "ASC" ? "DESC" : "ASC";
-
-        //    //dtOrden = ofunciones.BindGrid((DataTable)ViewState["Inmueble"], SortDirection, e.SortExpression);//ListadoInmuebles
-        //    //dtOrden = ofunciones.BindGrid((List<Inmueble>)Session["ListadoInmuebles"], SortDirection, e.SortExpression);
-
-        //    gvInmueblesVista.Sort(SortExpression, System.Web.UI.WebControls.SortDirection.Ascending);
-
-        //    //ViewState["Inmueble"] = dtOrden;
-        //    //gvInmuebles.DataSource = dtOrden;
-        //    //gvInmuebles.DataBind();
-
-        //    ////se restablece las marcas que pudiera haber para la misma.
-        //    //if (!CheckBoxAllCabecera)
-        //    //{
-        //    //    ProductsSelectionManager.RestoreSelection((GridView)sender);
-        //    //}
-        //}
-
-        //private void gdvSort_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        //{
-        //    for (int i = 0; i < gdvSort.Columns.Count; i++)
-        //    {
-        //        gdvSort.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-        //    }
-        //}
-
 
         private void CargaNuevosValoresEnGrilla()
         {
-            if (Session["ListadoInmuebles"] != null)
+            try
             {
-                List<Inmueble> list1 = (List<Inmueble>)Session["ListadoInmuebles"];
-
-                for (int i = 0; i < list1.Count; i++)
+                if (Session["DatosSeleccionados"] != null)
                 {
-                    list1[i].TerrazaPrev = txtM2Terraza.Text == "" ? null : txtM2Terraza.Text;
-                    list1[i].M2UtilPrev = txtMetroUtil.Text == "" ? null : txtMetroUtil.Text;
-                    //list1[i].PrecioLista = Convert.ToInt32(txtPrecioLista.Text == "" ? "0" : txtPrecioLista.Text);
-                    //list1[i].TipoPrecioLista = hddTipoPrecioLista.Value;
-                    list1[i].PrecioLista = CalculaPrecioLista(Convert.ToInt32(hddTipoPrecioLista.Value), Convert.ToInt32(list1[i].PrecioLista));//Nuevo precio
-                    list1[i].TipoPrecioLista = hddTipoPrecioLista.Value;
-                    list1[i].IdEstadoInmueble = Convert.ToInt32(ddlEstadoInmueble.Text);//Verificar
-                    list1[i].JustificacionEstadoInmueble = txtJustificacion.Text.Trim();
-                    list1[i].Alicuota = txtAlicuota.Text.Trim();
-                    list1[i].NumeroRol = txtNumeroRol.Text.Trim();
-                    list1[i].Usuario = Session["IdUsuario"].ToString();
-                }
+                    List<Inmueble> list1 = (List<Inmueble>)Session["ListadoGrillaActual"];
 
-                gvInmueblesVista.DataSource = list1;
-                gvInmueblesVista.DataBind();
+                    DataTable dt = (DataTable)Session["DatosSeleccionados"];
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        list1[i].TerrazaPrev = txtM2Terraza.Text.Trim() == "" ? dt.Rows[i]["TerrazaPrev"].ToString() : txtM2Terraza.Text.Trim();
+                        list1[i].M2UtilPrev = txtMetroUtil.Text.Trim() == "" ? dt.Rows[i]["M2UtilPrev"].ToString() : txtMetroUtil.Text.Trim();
+                        if (txtPrecioLista.Text.Trim() != "")
+                        {
+                            list1[i].PrecioLista = CalculaPrecioLista(Convert.ToInt32(hddTipoPrecioLista.Value), Convert.ToInt32(dt.Rows[i]["PrecioLista"]));//Nuevo precio
+                        }
+                        list1[i].TipoPrecioLista = hddTipoPrecioLista.Value;
+                        list1[i].IdEstadoInmueble = Convert.ToInt32(ddlEstadoInmueble.Text);//Verificar
+                        list1[i].JustificacionEstadoInmueble = txtJustificacion.Text.Trim() == "" ? dt.Rows[i]["JustificacionEstadoInmueble"].ToString() : txtJustificacion.Text.Trim();
+                        list1[i].Alicuota = txtAlicuota.Text.Trim() == "" ? dt.Rows[i]["Alicuota"].ToString() : txtAlicuota.Text.Trim();
+                        list1[i].NumeroRol = txtNumeroRol.Text.Trim() == "" ? dt.Rows[i]["NumeroRol"].ToString() : txtNumeroRol.Text.Trim();
+                        list1[i].Usuario = Session["IdUsuario"].ToString();
+                    }
+
+                    gvInmueblesVista.DataSource = list1;
+                    gvInmueblesVista.DataBind();
+                }
+                else
+                {
+                    Alerta("Dede recargar la página", 4);
+                    return;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Alerta("Dede recargar la página", 4);
-                return;
+                Alerta("Error: " + ex.Message, 4);
+                throw;
             }
         }
 
@@ -546,5 +418,22 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             return "1";
         }
 
+
+        public DataTable ConvertToDataTable<T>(IList<T> data)
+        {
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable();
+            foreach (PropertyDescriptor prop in properties)
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            foreach (T item in data)
+            {
+                DataRow row = table.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                table.Rows.Add(row);
+            }
+            return table;
+
+        }
     }
 }

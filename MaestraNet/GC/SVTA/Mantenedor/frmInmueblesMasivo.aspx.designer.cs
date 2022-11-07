@@ -177,6 +177,24 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         protected global::System.Web.UI.WebControls.LinkButton lnkPrevisualizaCambios;
 
         /// <summary>
+        /// Control lblListaDatosActuales.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblListaDatosActuales;
+
+        /// <summary>
+        /// Control gvDatosActuales.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvDatosActuales;
+
+        /// <summary>
         /// Control lblLista.
         /// </summary>
         /// <remarks>

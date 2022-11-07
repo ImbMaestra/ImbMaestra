@@ -303,6 +303,45 @@
             <tr>
                 <td>
                     <br />
+                    <div id="GrillaDatosActuales">
+                        <fieldset class="principal">
+                            <legend>
+                                <asp:Label ID="lblListaDatosActuales" runat="server" Text="Datos Actuales" CssClass="principal"></asp:Label>
+                            </legend>
+                            <asp:GridView ID="gvDatosActuales" runat="server" CellPadding="4" AutoGenerateColumns="False"
+                                    DataKeyNames="IdInmueble" 
+                                    AllowPaging="True" AllowSorting="false" OnPageIndexChanging="gvDatosActuales_PageIndexChanging" CssClass="grid_data" PageSize="2">
+                                <AlternatingRowStyle CssClass="grid_linea_alterna" />
+                                <Columns>
+                                    <asp:BoundField DataField="IdInmueble" HeaderText="Id Inmueble" ReadOnly="True" SortExpression="IdInmueble" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="TerrazaPrev" HeaderText="Terraza" ReadOnly="True" SortExpression="TerrazaPrev" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="M2UtilPrev" HeaderText="M2 Util" ReadOnly="True" SortExpression="M2UtilPrev" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="Piso" HeaderText="Piso" ReadOnly="True" SortExpression="Piso" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="PrecioLista" HeaderText="Precio Lista" ReadOnly="True" SortExpression="PrecioLista" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="EstadoInmueble" HeaderText="Estado" ReadOnly="True" SortExpression="EstadoInmueble" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="NumeroRol" HeaderText="Numero Rol" ReadOnly="True" SortExpression="NumeroRol" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="Alicuota" HeaderText="Alicuota" ReadOnly="True" SortExpression="Alicuota" HeaderStyle-Font-Underline="true" />
+                                    <asp:BoundField DataField="JustificacionEstadoInmueble" HeaderText="Justificación" ReadOnly="True" SortExpression="JustificacionEstadoInmueble" HeaderStyle-Font-Underline="true" />
+
+                                </Columns>
+                                <FooterStyle CssClass="grid_footer" />
+                                <HeaderStyle CssClass="grid_header" />
+                                <PagerStyle CssClass="grid_pager" HorizontalAlign="Center" />
+                                <RowStyle CssClass="grid_row" />
+                                <SelectedRowStyle CssClass="grid_selected_row" />
+                                <SortedAscendingCellStyle CssClass="grid_selected_row_asc" />
+                                <SortedAscendingHeaderStyle CssClass="grid_selected_header_asc" />
+                                <SortedDescendingCellStyle CssClass="grid_selected_row_des" />
+                                <SortedDescendingHeaderStyle CssClass="grid_selected_header_des" />
+                            </asp:GridView>
+                            <br />
+                        </fieldset>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br />
                     <br />
                     <div id="GrillaInmueble">
                         <fieldset class="principal">
@@ -312,8 +351,7 @@
 
                             <asp:GridView ID="gvInmueblesVista" runat="server" CellPadding="4" AutoGenerateColumns="False"
                                     DataKeyNames="IdInmueble" 
-                                    OnDataBound="gvInmueblesVista_DataBound" OnRowDataBound="gvInmueblesVista_RowDataBound"
-                                    AllowPaging="True" AllowSorting="false" OnPageIndexChanging="gvInmueblesVista_PageIndexChanging" onpageindexchanged="gvProducts_PageIndexChanged" CssClass="grid_data" PageSize="10">
+                                    AllowPaging="True" AllowSorting="false" OnPageIndexChanging="gvInmueblesVista_PageIndexChanging" CssClass="grid_data" PageSize="2">
                                 <AlternatingRowStyle CssClass="grid_linea_alterna" />
                                 <Columns>
                                     <asp:BoundField DataField="IdInmueble" HeaderText="Id Inmueble" ReadOnly="True" SortExpression="IdInmueble" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />

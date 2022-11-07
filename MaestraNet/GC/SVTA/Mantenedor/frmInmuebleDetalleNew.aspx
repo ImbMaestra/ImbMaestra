@@ -280,7 +280,7 @@
                                     <asp:GridView ID="gvInmuebles" runat="server" CellPadding="4" AutoGenerateColumns="False"
                                             DataKeyNames="IdInmueble"
                                             OnDataBound="gvInmuebles_DataBound" OnRowDataBound="gvInmuebles_RowDataBound"
-                                            AllowPaging="True" AllowSorting="True"  CssClass="grid_data" PageSize="5">
+                                            AllowPaging="True" AllowSorting="false" OnPageIndexChanging="gvInmuebles_PageIndexChanging" CssClass="grid_data" PageSize="5">
                                         <AlternatingRowStyle CssClass="grid_linea_alterna" />
                                         <Columns>
                                             <asp:BoundField DataField="IdInmueble" HeaderText="Id Inmueble" ReadOnly="True" SortExpression="IdInmueble" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />
@@ -320,7 +320,7 @@
                                     <asp:GridView ID="gvAsociadoRol" runat="server" CellPadding="4" AutoGenerateColumns="False"
                                             DataKeyNames="IdInmuebleA"
                                             OnDataBound="gvAsociadoRol_DataBound" OnRowDataBound="gvAsociadoRol_RowDataBound"
-                                            AllowPaging="True" AllowSorting="True" CssClass="grid_data" PageSize="5">
+                                            AllowPaging="True" AllowSorting="false" OnPageIndexChanging="gvAsociadoRol_PageIndexChanging" CssClass="grid_data" PageSize="5">
                                         <AlternatingRowStyle CssClass="grid_linea_alterna" />
                                         <Columns>
                                             <asp:BoundField DataField="NumeroRolA" HeaderText="Rol" ReadOnly="True" SortExpression="NumeroRolA" HeaderStyle-Font-Underline="true" ControlStyle-Font-Underline="true" />

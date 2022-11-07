@@ -11,6 +11,7 @@ using System.Data.OleDb;
 using System.IO;
 using System.Collections;
 using MaestraNet.Entidad;
+using System.ComponentModel;
 
 namespace MaestraNet.GC.SVTA.Mantenedor
 {
@@ -98,7 +99,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
 
                 if (Session["datosBusquedaInmueble"] != null)
                 {
-                    DataSet dsInmueble;
+                    //DataSet dsInmueble;
                     BLInmueble oInmueble = new BLInmueble();
                     Funciones oFunciones = new Funciones();
                     string[] datosBusqueda = Session["datosBusquedaInmueble"].ToString().Split(',');
@@ -654,39 +655,40 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             {
                 list1 = new List<int>();
             }
-            else
-            {
-                //Recorrer tabla identificando los items de la lista
-                //Verificar el campo IdEstado, verificar que todos sean disponibles
-                List<Inmueble> list2 = new List<Inmueble>();
 
-                DataTable dt = (DataTable)ViewState["Inmueble"];
-                for (int i = 0; i < dt.Rows.Count; i++)
+            //Recorrer tabla identificando los items de la lista
+            //Verificar el campo IdEstado, verificar que todos sean disponibles
+            List<Inmueble> list2 = new List<Inmueble>();
+
+            DataTable dt = (DataTable)ViewState["Inmueble"];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                foreach (var item in list1)
                 {
-                    foreach (var item in list1)
+                    if (item == Convert.ToInt32(dt.Rows[i]["IdInmueble"]))
                     {
-                        if (item == Convert.ToInt32(dt.Rows[i]["IdInmueble"]))
-                        {
-                            Inmueble list3 = new Inmueble();
-                            list3.IdInmueble = Convert.ToInt32(dt.Rows[i]["IdInmueble"].ToString());
-                            list3.IdEstadoInmueble = Convert.ToInt32(dt.Rows[i]["IdEstado"]);
-                            //list3.Terraza = Convert.ToDouble(dt.Rows[i]["M2Terreno"]);
-                            //list3.M2Util = Convert.ToDouble(dt.Rows[i]["M2"]);
-                            list3.TerrazaPrev = dt.Rows[i]["M2Terreno"].ToString();
-                            list3.M2UtilPrev = dt.Rows[i]["M2"].ToString();
-                            list3.Piso = Convert.ToInt32(dt.Rows[i]["Piso"].ToString());
-                            list3.EstadoInmueble = dt.Rows[i]["Estado"].ToString();
-                            list3.JustificacionEstadoInmueble = dt.Rows[i]["JustificacionEstadoInmueble"].ToString();
-                            list3.PrecioLista = Convert.ToInt32(dt.Rows[i]["PrecioLista"]);
-                            list3.NumeroRol = dt.Rows[i]["NumeroRol"].ToString();
-                            list3.Alicuota = dt.Rows[i]["Alicuota"].ToString();
-                            list2.Add(list3);
-                        }
+                        Inmueble list3 = new Inmueble();
+                        list3.IdInmueble = Convert.ToInt32(dt.Rows[i]["IdInmueble"].ToString());
+                        list3.IdEstadoInmueble = Convert.ToInt32(dt.Rows[i]["IdEstado"]);
+                        //list3.Terraza = Convert.ToDouble(dt.Rows[i]["M2Terreno"]);
+                        //list3.M2Util = Convert.ToDouble(dt.Rows[i]["M2"]);
+                        list3.TerrazaPrev = dt.Rows[i]["M2Terreno"].ToString();
+                        list3.M2UtilPrev = dt.Rows[i]["M2"].ToString();
+                        list3.Piso = Convert.ToInt32(dt.Rows[i]["Piso"].ToString());
+                        list3.EstadoInmueble = dt.Rows[i]["Estado"].ToString();
+                        list3.JustificacionEstadoInmueble = dt.Rows[i]["JustificacionEstadoInmueble"].ToString();
+                        list3.PrecioLista = Convert.ToInt32(dt.Rows[i]["PrecioLista"]);
+                        list3.NumeroRol = dt.Rows[i]["NumeroRol"].ToString();
+                        list3.Alicuota = dt.Rows[i]["Alicuota"].ToString();
+                        list2.Add(list3);
                     }
                 }
-
-                Session["ListadoInmuebles"] = list2;
             }
+
+            Session["DatosSeleccionados"] = ConvertToDataTable(list2);
+
+            Session["ListadoGrillaActual"] = list2;
+            
 
             if (list1.Count == 0)
             {
@@ -714,6 +716,23 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         private void LimpiaListaSeleccion()
         {
             HttpContext.Current.Session["ProdSelection"] = null;
+        }
+
+        public DataTable ConvertToDataTable<T>(IList<T> data)
+        {
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable();
+            foreach (PropertyDescriptor prop in properties)
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            foreach (T item in data)
+            {
+                DataRow row = table.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                table.Rows.Add(row);
+            }
+            return table;
+
         }
 
     }

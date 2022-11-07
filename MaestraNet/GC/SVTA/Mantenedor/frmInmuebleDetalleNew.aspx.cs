@@ -136,7 +136,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 return false;
             }
 
-            if (hddTipoInmueble.Value != "3")
+            if (hddTipoInmueble.Value == "1") //1-Departamento
             {
                 if (txtEdificio.Text.Trim().Length < 1)
                 {
@@ -192,7 +192,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                  return false;
              }*/
 
-            if (hddTipoInmueble.Value != "3")
+            if (hddTipoInmueble.Value == "1") //1-Departamento
             {
                 if (txtObservacion.Text.Trim().Length < 5)
                 {
@@ -209,7 +209,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             //    return false;
             //}
 
-            if (hddTipoInmueble.Value != "3")
+            if (hddTipoInmueble.Value == "1") //1-Departamento
             {
                 if (ddlModeloInmueble.SelectedValue != "31" && ddlModeloInmueble.SelectedValue != "8" && ddlModeloInmueble.SelectedValue != "5" && ddlModeloInmueble.SelectedValue != "4" && ddlOrientacion.SelectedValue == "0")
                 {
@@ -277,7 +277,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
 
             try
             {
-                blInmueble.ModificarInmueble(oInmueble);
+                blInmueble.ModificarInmueble2(oInmueble);
             }
             catch (Exception ex)
             {
@@ -315,7 +315,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 {
 
                 }
-                //string[] datosBusqueda = Session["datosBusquedaInmueble"].ToString().Split(',');
             }
         }
 
@@ -339,38 +338,19 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             string[] datosBusqueda = Session["datosBusquedaInmueble"].ToString().Split(',');
 
             int idProyecto = Convert.ToInt32(datosBusqueda[0].ToString());
-            //int idTipoInmueble = Convert.ToInt32(datosBusqueda[1].ToString());
             string Edificio = datosBusqueda[2].ToString();
             int NDepto = Convert.ToInt32(datosBusqueda[3].ToString() == "" ? "0" : datosBusqueda[3].ToString());
-            //int IdModeloInmueble = Convert.ToInt32(datosBusqueda[4].ToString());
             int Piso = Convert.ToInt32(datosBusqueda[5].ToString() == "" ? "0" : datosBusqueda[5].ToString());
             int IdOrientacion = Convert.ToInt32(datosBusqueda[6].ToString());
-
 
             DataSet dsInmueble;
             string funcionJS;
             BLInmueble oInmueble = new BLInmueble();
             Funciones oFunciones = new Funciones();
-            //int ndepto = txtDepto.Text.Trim().Length == 0 ? 0 : Convert.ToInt32(txtDepto.Text.Trim());
-            //int iPiso;
-
-            //HttpContext.Current.Session["ProdSelection"] = null;
-
-            //if (ddlProyecto.SelectedValue == "0")
-            //{
-            //    Alerta("Seleccione un Proyecto", 3, true);
-            //    ddlProyecto.Focus();
-            //    return;
-            //}
-            //if (string.IsNullOrEmpty(txtPiso.Text))
-            //    iPiso = 0;
-            //else
-            //    iPiso = Convert.ToInt32(txtPiso.Text);
 
             try
             {
                 dsInmueble = oInmueble.ListaInmueble2(idProyecto, Convert.ToInt32(ddlTipoInmueble.SelectedValue), Edificio, NDepto, 0, Piso, IdOrientacion);
-                ////dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), iPiso, Convert.ToInt32(ddlOrientacion.SelectedValue));
                 ViewState["Inmueble"] = dsInmueble.Tables[0];
 
                 SortExpression = "Descripcion";
@@ -446,20 +426,20 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             try
             {
                 DataSet dsInmueble;
+                Funciones oFunciones = new Funciones();
                 int idInmuebleA = Convert.ToInt32(lblIdInmueble.Text);
-                //dsInmueble = oInmueble.ListaInmueble(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), Convert.ToInt32(txtPiso.Text));
                 dsInmueble = oInmueble.ListaAsociaInmuebleRol(idInmuebleA);
+
+                ViewState["InmuebleRol"] = dsInmueble.Tables[0];
+
                 string funcionJS;
-                //ListaAsociaInmuebleRol
-                //ViewState["Inmueble"] = dsInmueble.Tables[0];
 
                 SortExpression = "Descripcion";
 
                 // if (dsInmueble.Tables[0].Rows.Count > 0)
                 //{
-
-                //gvInmuebles.DataSource = oFunciones.BindGrid((DataTable)ViewState["Inmueble"], SortDirection, SortExpression);
-                gvAsociadoRol.DataSource = dsInmueble;
+                //gvAsociadoRol.DataSource = dsInmueble;
+                gvAsociadoRol.DataSource = oFunciones.BindGrid((DataTable)ViewState["InmuebleRol"], SortDirection, SortExpression);
                 gvAsociadoRol.DataBind();
 
                 //}
@@ -483,11 +463,31 @@ namespace MaestraNet.GC.SVTA.Mantenedor
 
         }
 
+        protected void gvInmuebles_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvInmuebles.PageIndex = e.NewPageIndex;
+            DataTable dt = (DataTable)ViewState["Inmueble"];
+            dt.DefaultView.Sort = SortExpression + " " + this.SortDirection;
+
+            gvInmuebles.DataSource = dt;
+
+            gvInmuebles.DataBind();
+        }
+        //gvAsociadoRol_PageIndexChanging
+
+        protected void gvAsociadoRol_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvAsociadoRol.PageIndex = e.NewPageIndex;
+            DataTable dt = (DataTable)ViewState["InmuebleRol"];
+            dt.DefaultView.Sort = SortExpression + " " + this.SortDirection;
+
+            gvAsociadoRol.DataSource = dt;
+
+            gvAsociadoRol.DataBind();
+        }
         protected void btnEliminarInmueble_Click(object sender, EventArgs e)
         {
-           BLInmueble oInmueble = new BLInmueble();
-            //Inmueble inm = new Inmueble();
-            //int iIdProyecto;
+            BLInmueble oInmueble = new BLInmueble();
             GridViewRow gvrow = (GridViewRow)(((LinkButton)sender)).NamingContainer;
             HiddenField theHiddenField = gvrow.FindControl("HiddenFieldDifferentUsers") as HiddenField;
 
@@ -501,7 +501,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             try
             {
                 oInmueble.AsociaInmuebleRol(idInmuebleA, idInmuebleB, NroRolA, NroRolB, 0);
-                //iIdProyecto = oInmueble.AsociaInmuebleRol(inm);
                 ListaAsociacionInmuebleRol();
             }
             catch (Exception ex)
