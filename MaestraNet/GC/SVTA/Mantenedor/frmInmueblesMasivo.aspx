@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" maintainScrollPositionOnPostBack="true" AutoEventWireup="true" CodeBehind="frmInmueblesMasivo.aspx.cs" Inherits="MaestraNet.GC.SVTA.Mantenedor.frmInmueblesMasivo" %>
-
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -86,82 +86,8 @@
 
         }
 
-
-        $(document).ready(function () {
-            $("#btnAceptarCambios").click(function (e) {
-                var url = "frmInmueblesMasivo.aspx/Prueba";
-                //var url = "@Url.Content('~/frmInmueblesMasivo.aspx/Prueba')";
-                //$.ajax({
-                //    type: 'POST',
-                //    //url: baseUrl + url,
-                //    //data: "{}",
-                //    url: url,
-                //    dataType: 'json',
-                //    contentType: "application/json; charset=utf-8",
-                //    success: function (resp) {
-                //        //alert("Va");
-                //        //$("#AvisoCierreSession").modal("hide");
-                //    }
-                //    , error: function (ex) {
-                //        alert('Error al Reactivar Sesión ' + ex);
-                //    }
-                //});
-                //return false;
-
-
-
-                //$.ajax({
-                //    type: "POST",
-                //    url: url,
-                //    data: '{TempId:1}',
-                //    contentType: "application/json; charset=utf-8",
-                //    dataType: "json",
-                //    success: function (data) {
-                //            alert('Data: ' + data);
-                //        },
-                //    error: function (result) {
-                //        alert("Error" + result);
-                //    }
-                //});
-
-                $.ajax({
-                    type: "POST",
-                    url: 'frmInmueblesMasivo.aspx/Prueba',
-                    data: '{TempId: 1}',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        // fail-safe for older ASP.NET frameworks
-                        //var data = response.hasOwnProperty("d") ? response.d : response;
-                        alert(response);  //Changed here
-                    },
-                    failure: function (response) {
-
-                    }
-                });
-
-
-            });
-
-            $('#ConfirmModificar').click(function () {
-                //alert("Levantar popup");
-                showAlertaConfirmar();
-            });
-        });
-
-
-        //$(document).ready(function () {
-        //    $("#btnUno").click(function () {
-        //        //$('#modalAlertaError').modal('show');
-        //        showAlertaAlert();
-        //        //$('#modalAlertaInformar').modal({ backdrop: true });
-        //        //$('#myModal').modal({
-        //        //    show: 'true'
-        //        //});
-        //        //alert("Holanda");
-        //    });
-        //});
     </script>
+  
     <title>Edición Masiva de Inmuebles</title>
 </head>
 <body>
@@ -399,10 +325,9 @@
                     <asp:LinkButton ID="lnkVolver" runat="server" CssClass="botoMaestra btn" OnClick="lnkVolver_Click">Volver</asp:LinkButton>
                 </td>
                 <td align="right">
-                    <asp:LinkButton ID="lnkConfirmModificar" runat="server" CssClass="botoMaestra btn" Width="150" ToolTip="Modificar Inmueble" OnClientClick="return window.confirm('Seguro que desea modificar los registros?')" OnClick="lnkConfirmModificar_Click">Modificar Inmueble</asp:LinkButton>
-                    <%--<asp:LinkButton ID="lnkConfirmModificar" runat="server" CssClass="botoMaestra btn" Width="150" ToolTip="Modificar Inmueble" OnClick="lnkConfirmModificar_Click">Modificar Inmueble</asp:LinkButton>
-                    <button type="button" id="ConfirmModificar" class="botoMaestra btn" data-dismiss="modal">Prueba Modificar</button>--%>
-                    
+                    <asp:Button ID="ServerButton" runat="server" CssClass="botoMaestra btn" Width="150" Text="Modificar Inmueble" OnClick="ServerButton_Click" />
+                    <%--<asp:LinkButton ID="lnkConfirmModificar" runat="server" CssClass="botoMaestra btn" Width="150" ToolTip="Modificar Inmueble" OnClientClick="return window.confirm('Seguro que desea modificar los registros?')" OnClick="lnkConfirmModificar_Click">Modificar Inmueble</asp:LinkButton>--%>
+                                       
                 </td>
             </tr>
         </table>
@@ -509,6 +434,76 @@
             </div>
         </div>   
         <!-- FIN - Alerta Información-->
+
+
+
+
+
+          <%-- INICIO Modal para confirmar --%>
+        <asp:ScriptManager ID="asm" runat="server" />
+
+        <asp:Panel ID="ModalPanel" runat="server" Width="300px" BackColor="WhiteSmoke" BackgroundCssClass="FondoAplicacion" DropShadow="True" BorderStyle="Solid" BorderColor="Black">
+
+            <%--<div class="modal-dialog modal-sm" role="document">--%>
+                <div class="modal-content">  
+              
+                    <div class="modal-header">                        
+					    <asp:Label ID="Label4" runat="server" CssClass="info_modal"><span runat="server" class="oi oi-info"></span>&nbsp;&nbsp;Información</asp:Label>
+                    </div>
+
+
+                    <div class="modal-body">
+                        <h6 style="margin-right: auto; margin-left: auto">
+                            <asp:Label ID="Label3" runat="server" Text=""></asp:Label>
+                            <p>¿Seguro que desea modificar inmueble?</p>
+                        </h6>
+                    </div>
+
+                    <div class="modal-footer">
+                        <asp:Button ID="Button1" runat="server" Text="Aceptar" CssClass="botoMaestra btn" Width="150" OnClick="lnkConfirmModificar_Click" />
+                        <asp:Button ID="btnCancelarCambios" runat="server" Text="Cancelar" CssClass="botoMaestra btn" Width="150" OnClick="ServerButtonClose_Click" />
+                    </div>
+                </div>
+            <%--</div>--%>
+
+
+            
+
+            <ajaxToolkit:ModalPopupExtender
+                ID="mpe"
+                runat="server"
+                TargetControlID="ServerButton"
+                PopupControlID="ModalPanel"
+                OkControlID="btnCancelarCambios" />
+        </asp:Panel>
+
+        <script runat="server">
+            protected void ServerButton_Click(object sender, EventArgs e)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "key", "launchModal();", true);
+            }
+
+            protected void ServerButtonClose_Click(object sender, EventArgs e)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "key", "launchModal();", false);
+            }
+
+
+        </script>
+
+        <script type="text/javascript">
+            var launch = false;
+            function launchModal() {
+                launch = true;
+            }
+            function pageLoad() {
+                if (launch) {
+                    $find("mpe").show();
+                }
+            }
+        </script>
+
+        <%-- FIN Modal para confirmar --%>
     </form>
 </body>
 </html>
