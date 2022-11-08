@@ -113,17 +113,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                     txtPiso.Text = datosBusqueda[5];
                     ddlOrientacion.SelectedValue = datosBusqueda[6];
 
-                    //dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(datosBusqueda[0]), Convert.ToInt32(datosBusqueda[1]), datosBusqueda[2], Convert.ToInt32(datosBusqueda[3]), Convert.ToInt32(datosBusqueda[4]), Convert.ToInt32(datosBusqueda[5]), Convert.ToInt32(datosBusqueda[6]));
-                    //dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), iPiso, Convert.ToInt32(ddlOrientacion.SelectedValue));
-                    //ViewState["Inmueble"] = dsInmueble.Tables[0];
-
-                    //SortExpression = "Descripcion";
-
-                    // if (dsInmueble.Tables[0].Rows.Count > 0)
-                    //{
-
-                    //gvInmuebles.DataSource = oFunciones.BindGrid((DataTable)ViewState["Inmueble"], SortDirection, SortExpression);
-                    //gvInmuebles.DataBind();
                 }
             }
         }

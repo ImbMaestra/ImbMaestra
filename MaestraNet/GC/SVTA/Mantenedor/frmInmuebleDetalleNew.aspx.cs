@@ -185,12 +185,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 return false;
 
             }
-            /* if (txtObservacion.Text.Trim().Length<5)
-             {
-                 Alerta("Ingrese Observación", 4);
-                 txtObservacion.Focus();
-                 return false;
-             }*/
 
             if (hddTipoInmueble.Value == "1") //1-Departamento
             {
@@ -201,13 +195,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                     return false;
                 }
             }
-
-            //if (ddlModeloInmueble.SelectedValue != "31" && ddlModeloInmueble.SelectedValue != "8" && ddlModeloInmueble.SelectedValue != "5" && ddlModeloInmueble.SelectedValue != "4" && txtOrientacion.Text.Trim().Length < 3)
-            //{
-            //    Alerta("Ingrese orientación", 4);
-            //    txtOrientacion.Focus();
-            //    return false;
-            //}
 
             if (hddTipoInmueble.Value == "1") //1-Departamento
             {
@@ -375,10 +362,8 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         protected void btnAsociar_Click(object sender, EventArgs e)
         {
             BLInmueble oInmueble = new BLInmueble();
-            Inmueble inm = new Inmueble();
-            //int iIdProyecto;
+            //Inmueble inm = new Inmueble();
             GridViewRow gvrow = (GridViewRow)(((LinkButton)sender)).NamingContainer;
-            //TextBox txtPack = gvInmuebles.FindControl("txtInmueblePack") as TextBox;
             HiddenField theHiddenField = gvrow.FindControl("HiddenFieldDifferentUsers") as HiddenField;
 
             //int idProyecto = Convert.ToInt32(datosBusqueda[0].ToString());
@@ -398,9 +383,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             try
             {
                 oInmueble.AsociaInmuebleRol(idInmuebleA, idInmuebleB, NroRolA, NroRolB, 1);
-                //inm.IdInmueble = 123;
-
-                //iIdProyecto = oInmueble.AsociaInmuebleRol(inm);
                 ListaAsociacionInmuebleRol();
 
             }
@@ -410,8 +392,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 return;
             }
         }
-
-        
 
         private void ListaAsociacionInmuebleRol()
         {
@@ -428,13 +408,9 @@ namespace MaestraNet.GC.SVTA.Mantenedor
 
                 SortExpression = "Descripcion";
 
-                // if (dsInmueble.Tables[0].Rows.Count > 0)
-                //{
-                //gvAsociadoRol.DataSource = dsInmueble;
                 gvAsociadoRol.DataSource = oFunciones.BindGrid((DataTable)ViewState["InmuebleRol"], SortDirection, SortExpression);
                 gvAsociadoRol.DataBind();
 
-                //}
                 funcionJS = "$('#gvAsociadoRol').show();";
                 ScriptManager.RegisterStartupScript(this, GetType(), "ModalLib", funcionJS, true);
             }
@@ -443,16 +419,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                 Alerta(ex.Message, 1);
                 return;
             }
-        }
-
-        protected void gvAsociadoRol_DataBound(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void gvAsociadoRol_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-
         }
 
         protected void gvInmuebles_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -465,7 +431,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
 
             gvInmuebles.DataBind();
         }
-        //gvAsociadoRol_PageIndexChanging
 
         protected void gvAsociadoRol_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {

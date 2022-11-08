@@ -319,7 +319,6 @@
                                <div class="col-md-6">
                                     <asp:GridView ID="gvAsociadoRol" runat="server" CellPadding="4" AutoGenerateColumns="False"
                                             DataKeyNames="IdInmuebleA"
-                                            OnDataBound="gvAsociadoRol_DataBound" OnRowDataBound="gvAsociadoRol_RowDataBound"
                                             AllowPaging="True" AllowSorting="false" OnPageIndexChanging="gvAsociadoRol_PageIndexChanging" CssClass="grid_data" PageSize="5">
                                         <AlternatingRowStyle CssClass="grid_linea_alterna" />
                                         <Columns>
