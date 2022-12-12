@@ -28,6 +28,7 @@
                 <asp:LinkButton ID="lnkTipoInmueble" runat="server" class="botoMaestra btn" OnClick="lnkTipoInmueble_Click">Tipo Inmueble</asp:LinkButton>
                 <%--<asp:LinkButton ID="lnkMantenedorGeneral" runat="server" class="botoMaestra btn" OnClick="lnkMantenedorGeneral_Click">Mantenedor General</asp:LinkButton>--%>
                 <asp:LinkButton ID="lnkInmuebleNew" runat="server" class="botoMaestra btn" OnClick="lnkInmuebleNew_Click">Inmuebles New</asp:LinkButton>
+                <asp:LinkButton ID="lnkCargaMasiva" runat="server" class="botoMaestra btn" OnClick="lnkCargaMasiva_Click" >Carga Masiva</asp:LinkButton>
             </div>
         </div>
 

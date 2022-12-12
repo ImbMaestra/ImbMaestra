@@ -358,6 +358,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                         }
                         list1[i].TipoPrecioLista = hddTipoPrecioLista.Value;
                         list1[i].IdEstadoInmueble = Convert.ToInt32(ddlEstadoInmueble.Text);//Verificar
+                        list1[i].EstadoInmueble = ddlEstadoInmueble.SelectedItem.Text;
                         list1[i].JustificacionEstadoInmueble = txtJustificacion.Text.Trim() == "" ? dt.Rows[i]["JustificacionEstadoInmueble"].ToString() : txtJustificacion.Text.Trim();
                         list1[i].Alicuota = txtAlicuota.Text.Trim() == "" ? dt.Rows[i]["Alicuota"].ToString() : txtAlicuota.Text.Trim();
                         list1[i].NumeroRol = txtNumeroRol.Text.Trim() == "" ? dt.Rows[i]["NumeroRol"].ToString() : txtNumeroRol.Text.Trim();
@@ -421,11 +422,13 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         //    return "1";
         //}
 
-        [WebMethod]
-        public static string Prueba(int TempId)    // el método debe ser de static
-        {
-            return "1";
-        }
+        //[System.Web.Services.WebMethod]
+        //public static string Prueba(int edad)    // el método debe ser de static
+        //{
+        //    //return "1";
+        //    Random aleatorio = new Random();
+        //    return aleatorio.Next(0, 1000).ToString();
+        //}
 
 
         public DataTable ConvertToDataTable<T>(IList<T> data)

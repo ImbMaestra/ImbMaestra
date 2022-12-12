@@ -318,9 +318,10 @@ namespace MaestraNet.GC.SVTA.Mantenedor
 
             int idProyecto = Convert.ToInt32(datosBusqueda[0].ToString());
             string Edificio = datosBusqueda[2].ToString();
-            int NDepto = Convert.ToInt32(datosBusqueda[3].ToString() == "" ? "0" : datosBusqueda[3].ToString());
-            int Piso = Convert.ToInt32(datosBusqueda[5].ToString() == "" ? "0" : datosBusqueda[5].ToString());
-            int IdOrientacion = Convert.ToInt32(datosBusqueda[6].ToString());
+            int NDepto = 0;
+            int Piso = 0;
+            int IdOrientacion = 0;
+            int idEstado = -1;
 
             DataSet dsInmueble;
             string funcionJS;
@@ -329,7 +330,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
 
             try
             {
-                dsInmueble = oInmueble.ListaInmueble2(idProyecto, Convert.ToInt32(ddlTipoInmueble.SelectedValue), Edificio, NDepto, 0, Piso, IdOrientacion);
+                dsInmueble = oInmueble.ListaInmueble2(idProyecto, Convert.ToInt32(ddlTipoInmueble.SelectedValue), Edificio, NDepto, 0, Piso, IdOrientacion, idEstado);
                 ViewState["Inmueble"] = dsInmueble.Tables[0];
 
                 SortExpression = "Descripcion";

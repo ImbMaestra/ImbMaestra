@@ -123,6 +123,24 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         protected global::System.Web.UI.WebControls.SqlDataSource sdsOrientacion;
 
         /// <summary>
+        /// Control ddlEstadoInmueble.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlEstadoInmueble;
+
+        /// <summary>
+        /// Control sdsEstadoInmueble.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsEstadoInmueble;
+
+        /// <summary>
         /// Control lnkBuscar.
         /// </summary>
         /// <remarks>
@@ -148,24 +166,6 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnNuevoInmueble;
-
-        /// <summary>
-        /// Control FileUpload1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
-
-        /// <summary>
-        /// Control btnCargaInmuebles.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnCargaInmuebles;
 
         /// <summary>
         /// Control btnEdicionMasiva.

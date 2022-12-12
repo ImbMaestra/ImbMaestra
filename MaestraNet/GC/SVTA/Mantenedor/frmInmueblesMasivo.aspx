@@ -12,6 +12,9 @@
     <link href="../sistema_venta.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
+    	
+
+
     <script language="Javascript">
     //const { debug } = require("node:util");
 
@@ -85,7 +88,6 @@
             }
 
         }
-
     </script>
   
     <title>Edición Masiva de Inmuebles</title>
@@ -326,8 +328,6 @@
                 </td>
                 <td align="right">
                     <asp:Button ID="ServerButton" runat="server" CssClass="botoMaestra btn" Width="150" Text="Modificar Inmueble" OnClick="ServerButton_Click" />
-                    <%--<asp:LinkButton ID="lnkConfirmModificar" runat="server" CssClass="botoMaestra btn" Width="150" ToolTip="Modificar Inmueble" OnClientClick="return window.confirm('Seguro que desea modificar los registros?')" OnClick="lnkConfirmModificar_Click">Modificar Inmueble</asp:LinkButton>--%>
-                                       
                 </td>
             </tr>
         </table>
@@ -420,7 +420,9 @@
                     <div class="modal-footer">
                         <%--<button type="button" class="botoMaestra btn" data-dismiss="modal">Aceptar</button>--%>
                         <%--<asp:Button ID="btnAceptarCambios" class="botoMaestra btn" data-dismiss="modal" runat="server" Text="Aceptar"/>--%>
-                        <button id="btnAceptarCambios" name="btnAceptarCambios" type="submit" class="botoMaestra btn">Aceptar</button>
+                        <%--<input id="btnAceptarCambios" class="botoMaestra btn" type="text" value="aceptar" />--%>
+                        <a id="btnAceptarCambios" href="#" class="botoMaestra btn">Validar</a> 
+                        <%--<button id="btnAceptarCambios" name="btnAceptarCambios" type="submit" class="botoMaestra btn">Aceptar</button>--%>
                         <%--<input type="button" id="btnUno" value="Boton" />--%>
                         <%--<button id="btnUno" name="button" class="botoMaestra btn">Click me</button>--%>
                         <%--<asp:LinkButton ID="btnUno" runat="server" CssClass="botoMaestra btn">
@@ -462,6 +464,7 @@
                     <div class="modal-footer">
                         <asp:Button ID="Button1" runat="server" Text="Aceptar" CssClass="botoMaestra btn" Width="150" OnClick="lnkConfirmModificar_Click" />
                         <asp:Button ID="btnCancelarCambios" runat="server" Text="Cancelar" CssClass="botoMaestra btn" Width="150" OnClick="ServerButtonClose_Click" />
+                    
                     </div>
                 </div>
             <%--</div>--%>

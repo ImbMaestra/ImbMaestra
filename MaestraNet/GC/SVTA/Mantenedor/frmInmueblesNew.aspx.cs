@@ -112,6 +112,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                     txtDepto.Text = datosBusqueda[3];
                     txtPiso.Text = datosBusqueda[5];
                     ddlOrientacion.SelectedValue = datosBusqueda[6];
+                    ddlEstadoInmueble.SelectedValue = datosBusqueda[7];
 
                 }
             }
@@ -147,9 +148,10 @@ namespace MaestraNet.GC.SVTA.Mantenedor
                                     txtDepto.Text.Trim() + "," +
                                     ddlModeloInmueble.SelectedValue + "," +
                                     txtPiso.Text.Trim() + "," +
-                                    ddlOrientacion.SelectedValue;
+                                    ddlOrientacion.SelectedValue + "," +
+                                    ddlEstadoInmueble.SelectedValue;
 
-                dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), iPiso, Convert.ToInt32(ddlOrientacion.SelectedValue));
+                dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), iPiso, Convert.ToInt32(ddlOrientacion.SelectedValue), Convert.ToInt32(ddlEstadoInmueble.SelectedValue));
                 ViewState["Inmueble"] = dsInmueble.Tables[0];
 
                 SortExpression = "Descripcion";
@@ -175,91 +177,106 @@ namespace MaestraNet.GC.SVTA.Mantenedor
         //{
         //    employeeTable.Columns.Add("Employee_ID", typeof(string));
         //}
-        protected void btnCargaInmuebles_Click(object sender, EventArgs e)
-        {
-            string connectionString = "";
-            BLInmueble oInmueble = new BLInmueble();
-            int iCotizacion = 0;
+        //protected void btnCargaInmuebles_Click(object sender, EventArgs e)
+        //{
+            //    string connectionString = "";
+            //    BLInmueble oInmueble = new BLInmueble();
+            //    int iCotizacion = 0;
 
-            if (FileUpload1.HasFile)
-            {
-                string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
-                string fileExtension = Path.GetExtension(FileUpload1.PostedFile.FileName);
-                string fileLocation = Server.MapPath("~/Documentos/");// + fileName);
-                FileUpload1.SaveAs(fileLocation + fileName);
+            //    if (FileUpload1.HasFile)
+            //    {
+            //        string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
+            //        string fileExtension = Path.GetExtension(FileUpload1.PostedFile.FileName);
+            //        string fileLocation = Server.MapPath("~/Documentos/");// + fileName);
+            //        FileUpload1.SaveAs(fileLocation + fileName);
 
-                //Check whether file extension is xls or xslx
-                if (fileExtension == ".xls")
-                {
-                    connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fileLocation + fileName + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
-                }
-                else if (fileExtension == ".xlsx")
-                {
-                    connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileLocation + fileName + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
-                }
-                else
-                {
-                    Alerta("Formatos soportados XLS y XLSX, favor revise el archivo", 4);
-                }
-                //Create OleDB Connection and OleDb Command
-                OleDbConnection con = new OleDbConnection(connectionString);
-                OleDbCommand cmd = new OleDbCommand();
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.Connection = con;
-                OleDbDataAdapter dAdapter = new OleDbDataAdapter(cmd);
-                DataTable dtExcelRecords = new DataTable();
-                try
-                {
-                    con.Open();
-                    DataTable dtExcelSheetName = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                    string getExcelSheetName = dtExcelSheetName.Rows[0]["Table_Name"].ToString();
-                    cmd.CommandText = "SELECT * FROM [" + getExcelSheetName + "]";
-                    dAdapter.SelectCommand = cmd;
-                    dAdapter.Fill(dtExcelRecords);
-                    con.Close();
-                }
-                catch (Exception ex)
-                {
-                    Alerta(ex.Message, 1);
-                }
-                if (dtExcelRecords.Columns.Count != 14)
-                {
-                    Alerta("Excel debe tener 14 columnas con los siguientes nombres \" IdInmueble, Piso, Ndepto, Edificio, Modelo, Orientacion, DeptoUtil, Balcon, Logia, PrecioLista, Observacion, EstadoInmueble, IdPack, usogoce \"", 1);
-                    return;
-                }
+            //        //Check whether file extension is xls or xslx
+            //        if (fileExtension == ".xls")
+            //        {
+            //            connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fileLocation + fileName + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
+            //        }
+            //        else if (fileExtension == ".xlsx")
+            //        {
+            //            connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileLocation + fileName + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+            //        }
+            //        else
+            //        {
+            //            Alerta("Formatos soportados XLS y XLSX, favor revise el archivo", 4);
+            //        }
+            //        //Create OleDB Connection and OleDb Command
+            //        OleDbConnection con = new OleDbConnection(connectionString);
+            //        OleDbCommand cmd = new OleDbCommand();
+            //        cmd.CommandType = System.Data.CommandType.Text;
+            //        cmd.Connection = con;
+            //        OleDbDataAdapter dAdapter = new OleDbDataAdapter(cmd);
+            //        DataTable dtExcelRecords = new DataTable();
+            //        try
+            //        {
+            //            con.Open();
+            //            DataTable dtExcelSheetName = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+            //            string getExcelSheetName = "";
+            //            foreach (DataRow item in dtExcelSheetName.Rows)
+            //            {
+            //                if (item["TABLE_NAME"].ToString() == "Inmuebles$")
+            //                {
+            //                    //getExcelSheetName = dtExcelSheetName.Rows[2]["Table_Name"].ToString();
+            //                    getExcelSheetName = item["TABLE_NAME"].ToString();
+            //                    break;
+            //                }
+            //                else
+            //                {
+            //                    Alerta("No existe la pestaña Inmueble en la planilla", 3);
+            //                    return;
+            //                }
+            //            }
 
-                try
-                {
-                    iCotizacion = oInmueble.ConsultaCotizacionProyecto(Convert.ToInt32(ddlProyecto.SelectedValue));
-                }
-                catch (Exception ex)
-                {
-                    Alerta(ex.Message, 1);
-                }
-                if (iCotizacion > 0)
-                {
-                    Alerta("El proyecto contiene inmueble con cotizaciones, no se puede cargar mas inmuebles", 3);
-                    return;
-                }
+            //            cmd.CommandText = "SELECT * FROM [" + getExcelSheetName + "]";
+            //            dAdapter.SelectCommand = cmd;
+            //            dAdapter.Fill(dtExcelRecords);
+            //            con.Close();
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            Alerta(ex.Message, 1);
+            //        }
+            //        if (dtExcelRecords.Columns.Count != 14)
+            //        {
+            //            Alerta("Excel debe tener 14 columnas con los siguientes nombres \" IdInmueble, Piso, Ndepto, Edificio, Modelo, Orientacion, DeptoUtil, Balcon, Logia, PrecioLista, Observacion, EstadoInmueble, IdPack, usogoce \"", 1);
+            //            return;
+            //        }
 
-                try
-                {
-                    oInmueble.IngresaInmueble(Convert.ToInt32(ddlProyecto.SelectedValue), dtExcelRecords);
-                    Alerta("Inmuebles ingresados de forma correcta", 3);
-                }
-                catch (Exception ex)
-                {
-                    Alerta(ex.Message, 1);
-                    return;
-                }
+            //        try
+            //        {
+            //            iCotizacion = oInmueble.ConsultaCotizacionProyecto(Convert.ToInt32(ddlProyecto.SelectedValue));
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            Alerta(ex.Message, 1);
+            //        }
+            //        if (iCotizacion > 0)
+            //        {
+            //            Alerta("El proyecto contiene inmueble con cotizaciones, no se puede cargar mas inmuebles", 3);
+            //            return;
+            //        }
 
-                llenaTorres(Convert.ToInt32(ddlProyecto.SelectedValue));
-            }
-            else
-            {
-                Alerta("Seleccione un archivo para subir", 4);
-            }
-        }
+            //        try
+            //        {
+            //            oInmueble.IngresaInmueble(Convert.ToInt32(ddlProyecto.SelectedValue), dtExcelRecords);
+            //            Alerta("Inmuebles ingresados de forma correcta", 3);
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            Alerta(ex.Message, 1);
+            //            return;
+            //        }
+
+            //        llenaTorres(Convert.ToInt32(ddlProyecto.SelectedValue));
+            //    }
+            //    else
+            //    {
+            //        Alerta("Seleccione un archivo para subir", 4);
+            //    }
+        //}
 
         protected void gvInmuebles_Sorting(object sender, GridViewSortEventArgs e)
         {
@@ -439,7 +456,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             try
             {
                 //dsInmueble = oInmueble.ListaInmueble(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), Convert.ToInt32(txtPiso.Text));
-                dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), Convert.ToInt32(txtPiso.Text), Convert.ToInt32(ddlOrientacion.SelectedValue));
+                dsInmueble = oInmueble.ListaInmueble2(Convert.ToInt32(ddlProyecto.SelectedValue), Convert.ToInt32(ddlTipoInmueble.SelectedValue), ddlTorre.SelectedValue, ndepto, Convert.ToInt32(ddlModeloInmueble.SelectedValue), Convert.ToInt32(txtPiso.Text), Convert.ToInt32(ddlOrientacion.SelectedValue), Convert.ToInt32(ddlEstadoInmueble.SelectedValue));
                 ViewState["Inmueble"] = dsInmueble.Tables[0];
 
                 SortExpression = "Descripcion";

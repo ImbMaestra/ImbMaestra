@@ -79,6 +79,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             lnkProyectos.ControlStyle.CssClass = lnkProyectos.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkTipoInmueble.ControlStyle.CssClass = lnkTipoInmueble.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkInmuebleNew.ControlStyle.CssClass = lnkInmuebleNew.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkCargaMasiva.ControlStyle.CssClass = lnkCargaMasiva.Enabled ? "botonTab btn" : "tabDisabled btn";
 
             lnkPerfil.ControlStyle.CssClass = "botoMaestraActivo btn";
 
@@ -95,6 +96,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             lnkProyectos.ControlStyle.CssClass = lnkProyectos.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkTipoInmueble.ControlStyle.CssClass = lnkTipoInmueble.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkInmuebleNew.ControlStyle.CssClass = lnkInmuebleNew.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkCargaMasiva.ControlStyle.CssClass = lnkCargaMasiva.Enabled ? "botonTab btn" : "tabDisabled btn";
 
             lnkProyectos.ControlStyle.CssClass = "botoMaestraActivo btn";
 
@@ -111,6 +113,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             lnkProyectos.ControlStyle.CssClass = lnkProyectos.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkTipoInmueble.ControlStyle.CssClass = lnkTipoInmueble.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkInmuebleNew.ControlStyle.CssClass = lnkInmuebleNew.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkCargaMasiva.ControlStyle.CssClass = lnkCargaMasiva.Enabled ? "botonTab btn" : "tabDisabled btn";
 
             lnkInmueble.ControlStyle.CssClass = "botoMaestraActivo btn";
 
@@ -126,6 +129,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             lnkProyectos.ControlStyle.CssClass = lnkProyectos.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkTipoInmueble.ControlStyle.CssClass = lnkTipoInmueble.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkInmuebleNew.ControlStyle.CssClass = lnkInmuebleNew.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkCargaMasiva.ControlStyle.CssClass = lnkCargaMasiva.Enabled ? "botonTab btn" : "tabDisabled btn";
 
             lnkPlantilla.ControlStyle.CssClass = "botoMaestraActivo btn";
 
@@ -142,6 +146,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             lnkProyectos.ControlStyle.CssClass = lnkProyectos.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkTipoInmueble.ControlStyle.CssClass = lnkTipoInmueble.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkInmuebleNew.ControlStyle.CssClass = lnkInmuebleNew.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkCargaMasiva.ControlStyle.CssClass = lnkCargaMasiva.Enabled ? "botonTab btn" : "tabDisabled btn";
 
             lnkClientes.ControlStyle.CssClass = "botoMaestraActivo btn";
 
@@ -172,6 +177,7 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             lnkProyectos.ControlStyle.CssClass = lnkProyectos.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkTipoInmueble.ControlStyle.CssClass = lnkTipoInmueble.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkInmuebleNew.ControlStyle.CssClass = lnkInmuebleNew.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkCargaMasiva.ControlStyle.CssClass = lnkCargaMasiva.Enabled ? "botonTab btn" : "tabDisabled btn";
 
             lnkInmuebleNew.ControlStyle.CssClass = "botoMaestraActivo btn";
 
@@ -188,10 +194,28 @@ namespace MaestraNet.GC.SVTA.Mantenedor
             lnkProyectos.ControlStyle.CssClass = lnkProyectos.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkTipoInmueble.ControlStyle.CssClass = lnkTipoInmueble.Enabled ? "botonTab btn" : "tabDisabled btn";
             lnkInmuebleNew.ControlStyle.CssClass = lnkInmuebleNew.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkCargaMasiva.ControlStyle.CssClass = lnkCargaMasiva.Enabled ? "botonTab btn" : "tabDisabled btn";
 
             lnkTipoInmueble.ControlStyle.CssClass = "botoMaestraActivo btn";
 
             myFrame.Src = "frmTipoInmueble.aspx";
+
+        }
+
+        protected void lnkCargaMasiva_Click(object sender, EventArgs e)
+        {
+            lnkPerfil.ControlStyle.CssClass = lnkPerfil.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkPlantilla.ControlStyle.CssClass = lnkPlantilla.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkInmueble.ControlStyle.CssClass = lnkInmueble.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkClientes.ControlStyle.CssClass = lnkClientes.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkProyectos.ControlStyle.CssClass = lnkProyectos.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkTipoInmueble.ControlStyle.CssClass = lnkTipoInmueble.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkInmuebleNew.ControlStyle.CssClass = lnkInmuebleNew.Enabled ? "botonTab btn" : "tabDisabled btn";
+            lnkCargaMasiva.ControlStyle.CssClass = lnkCargaMasiva.Enabled ? "botonTab btn" : "tabDisabled btn";
+
+            lnkCargaMasiva.ControlStyle.CssClass = "botoMaestraActivo btn";
+
+            myFrame.Src = "frmCargaMasiva.aspx";
 
         }
     }

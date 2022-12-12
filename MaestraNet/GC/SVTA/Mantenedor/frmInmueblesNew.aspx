@@ -20,19 +20,6 @@
             return true;
         }
 
-        $(document).ready(function () {
-            $("#btnUno").click(function () {
-                //$('#modalAlertaError').modal('show');
-                showAlertaAlert();
-                //$('#modalAlertaInformar').modal({ backdrop: true });
-                //$('#myModal').modal({
-                //    show: 'true'
-                //});
-                //alert("Holanda");
-            });
-        });
-
-
         function showAlertaInformar() {
             $('#modalAlertaInformar').modal('show');
         }
@@ -140,9 +127,18 @@
                                                     SelectCommand="sp_VTA_Orientacion" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
                                             </label>
                                 </div>
-                                <div class="col-md-4" style="text-align:right">
+                                <div class="col-md-3">
+                                            <label for="Estado">
+                                                Estado: &nbsp;
+                                                <asp:DropDownList ID="ddlEstadoInmueble" runat="server" CssClass="BordeRadio10" DataSourceID="sdsEstadoInmueble" DataTextField="Estado" DataValueField="IdEstado"></asp:DropDownList>
+                                                <asp:SqlDataSource ID="sdsEstadoInmueble" runat="server" ConnectionString="<%$ ConnectionStrings:Sistemas_Maestra %>"
+                                                    SelectCommand="sp_VTA_Estados_Inmuebles" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+                                            </label>
+                                </div>
+
+                                <div class="col-md-4" style="text-align:left">
                                     <label for="Buscar">
-                                        <asp:LinkButton ID="lnkBuscar" runat="server" CssClass="botoMaestra btn" OnClick="lnkBuscar_Click" OnClientClick="ValidaProyecto();">
+                                        <asp:LinkButton ID="lnkBuscar" runat="server" CssClass="botoMaestra btn" OnClick="lnkBuscar_Click" >
                                             Buscar <span class="oi oi-magnifying-glass"></span>
                                         </asp:LinkButton>
                                     </label>
@@ -184,18 +180,18 @@
                                         </span>
                                     </div>
                                 </td>
-                                <td align="right">
+                                <td width="20%" align="center">
                                     <asp:LinkButton ID="btnNuevoInmueble" runat="server" CssClass  ="botoMaestra btn"  ToolTip="Crear Inmueble" OnClick="btnNuevoInmueble_Click">
                                         Nuevo Inmueble <span class="oi oi-home"></span>
                                     </asp:LinkButton>
                                 </td>
-                                <td width="30%" align="right">
-                                     <asp:FileUpload ID="FileUpload1" runat="server" />
+                                <td width="10%" align="right">
+                                    <%-- <asp:FileUpload ID="FileUpload1" runat="server" />--%>
                                 </td>
                                 <td align="right">
-                                        <asp:LinkButton ID="btnCargaInmuebles" runat="server" CssClass  ="botoMaestra btn"  ToolTip="Carga Inmueble" OnClick="btnCargaInmuebles_Click">
+                                       <%-- <asp:LinkButton ID="btnCargaInmuebles" runat="server" CssClass  ="botoMaestra btn"  ToolTip="Carga Inmueble" OnClick="btnCargaInmuebles_Click">
                                         Carga Inmuebles <span class="oi oi-home"></span>
-                                    </asp:LinkButton>
+                                    </asp:LinkButton>--%>
                                 </td>
                             </tr>
                             <tr>
